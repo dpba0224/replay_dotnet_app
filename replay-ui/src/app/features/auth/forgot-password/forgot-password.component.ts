@@ -1,0 +1,109 @@
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { AuthService } from '../../../core/services/auth.service';
+
+@Component({
+  selector: 'app-forgot-password',
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterLink],
+  template: `
+    <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-md w-full space-y-8">
+        <div>
+          <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Reset your password
+          </h2>
+          <p class="mt-2 text-center text-sm text-gray-600">
+            Enter your email address and we'll send you a link to reset your password.
+          </p>
+        </div>
+
+        @if (!submitted) {
+          <form class="mt-8 space-y-6" (ngSubmit)="onSubmit()">
+            <div>
+              <label for="email" class="sr-only">Email address</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                [(ngModel)]="email"
+                required
+                class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Email address"
+              />
+            </div>
+
+            @if (error) {
+              <div class="text-red-600 text-sm text-center">{{ error }}</div>
+            }
+
+            <div>
+              <button
+                type="submit"
+                [disabled]="loading"
+                class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+              >
+                {{ loading ? 'Sending...' : 'Send Reset Link' }}
+              </button>
+            </div>
+
+            <div class="text-center">
+              <a routerLink="/auth/login" class="font-medium text-indigo-600 hover:text-indigo-500">
+                Back to login
+              </a>
+            </div>
+          </form>
+        } @else {
+          <div class="mt-8 space-y-6">
+            <div class="rounded-md bg-green-50 p-4">
+              <div class="flex">
+                <div class="flex-shrink-0">
+                  <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+                <div class="ml-3">
+                  <p class="text-sm font-medium text-green-800">
+                    If an account exists with that email, you will receive a password reset link shortly.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="text-center">
+              <a routerLink="/auth/login" class="font-medium text-indigo-600 hover:text-indigo-500">
+                Return to login
+              </a>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  `
+})
+export class ForgotPasswordComponent {
+  email = '';
+  loading = false;
+  error = '';
+  submitted = false;
+
+  constructor(private authService: AuthService) {}
+
+  onSubmit(): void {
+    this.loading = true;
+    this.error = '';
+
+    this.authService.forgotPassword(this.email).subscribe({
+      next: () => {
+        this.submitted = true;
+        this.loading = false;
+      },
+      error: () => {
+        // Still show success message for security (don't reveal if email exists)
+        this.submitted = true;
+        this.loading = false;
+      }
+    });
+  }
+}

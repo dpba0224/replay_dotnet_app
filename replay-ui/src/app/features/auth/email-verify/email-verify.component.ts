@@ -1,0 +1,85 @@
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../../core/services/auth.service';
+
+@Component({
+  selector: 'app-email-verify',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  template: `
+    <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-md w-full space-y-8">
+        <div>
+          <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Verify your email
+          </h2>
+          <p class="mt-2 text-center text-sm text-gray-600">
+            Enter the verification code sent to {{ email }}
+          </p>
+        </div>
+        <form class="mt-8 space-y-6" (ngSubmit)="onSubmit()">
+          <div>
+            <label for="code" class="sr-only">Verification Code</label>
+            <input
+              id="code"
+              name="code"
+              type="text"
+              [(ngModel)]="code"
+              required
+              class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm text-center text-2xl tracking-widest"
+              placeholder="000000"
+              maxlength="6"
+            />
+          </div>
+
+          @if (error) {
+            <div class="text-red-600 text-sm text-center">{{ error }}</div>
+          }
+
+          <div>
+            <button
+              type="submit"
+              [disabled]="loading"
+              class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+            >
+              {{ loading ? 'Verifying...' : 'Verify Email' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  `
+})
+export class EmailVerifyComponent {
+  email = '';
+  code = '';
+  loading = false;
+  error = '';
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.route.queryParams.subscribe(params => {
+      this.email = params['email'] || '';
+    });
+  }
+
+  onSubmit(): void {
+    this.loading = true;
+    this.error = '';
+
+    this.authService.verifyEmail(this.email, this.code).subscribe({
+      next: () => {
+        this.router.navigate(['/']);
+      },
+      error: (err) => {
+        this.error = err.error?.message || 'Verification failed. Please try again.';
+        this.loading = false;
+      }
+    });
+  }
+}

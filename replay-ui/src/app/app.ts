@@ -1,0 +1,89 @@
+import { Component } from '@angular/core';
+import { RouterOutlet, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { AuthService } from './core/services/auth.service';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, RouterLink, CommonModule],
+  template: `
+    <div class="min-h-screen bg-gray-100">
+      <!-- Navigation -->
+      <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+          <div class="flex justify-between h-16">
+            <div class="flex">
+              <a routerLink="/" class="flex items-center px-2 py-2 text-gray-700 hover:text-gray-900">
+                <span class="font-bold text-xl text-indigo-600">RePlay</span>
+              </a>
+              <div class="hidden md:ml-6 md:flex md:space-x-8">
+                <a routerLink="/" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900">
+                  Browse Toys
+                </a>
+                @if (authService.isAuthenticated()) {
+                  <a routerLink="/trades/history" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900">
+                    My Trades
+                  </a>
+                  <a routerLink="/messages" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900">
+                    Messages
+                  </a>
+                }
+                @if (authService.isAdmin()) {
+                  <a routerLink="/admin/dashboard" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-indigo-600 hover:text-indigo-800">
+                    Admin
+                  </a>
+                }
+              </div>
+            </div>
+            <div class="flex items-center">
+              @if (authService.isAuthenticated()) {
+                <div class="flex items-center space-x-4">
+                  <a routerLink="/profile" class="text-sm font-medium text-gray-500 hover:text-gray-900">
+                    {{ authService.currentUser()?.fullName }}
+                  </a>
+                  <button (click)="logout()" class="text-sm font-medium text-red-500 hover:text-red-700">
+                    Logout
+                  </button>
+                </div>
+              } @else {
+                <a routerLink="/auth/login" class="text-sm font-medium text-gray-500 hover:text-gray-900 mr-4">
+                  Sign in
+                </a>
+                <a routerLink="/auth/register" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                  Sign up
+                </a>
+              }
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main content -->
+      <main>
+        <router-outlet></router-outlet>
+      </main>
+
+      <!-- Footer -->
+      <footer class="bg-white mt-auto">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+          <p class="text-center text-gray-500 text-sm">
+            &copy; 2026 RePlay. Toy Trading Platform. All rights reserved.
+          </p>
+        </div>
+      </footer>
+    </div>
+  `,
+  styles: [`
+    :host {
+      display: block;
+    }
+  `]
+})
+export class App {
+  constructor(public authService: AuthService) {}
+
+  logout(): void {
+    this.authService.logout();
+  }
+}

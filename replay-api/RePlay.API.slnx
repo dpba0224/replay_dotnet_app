@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="RePlay.API/RePlay.API.csproj" />
+  <Project Path="RePlay.Application/RePlay.Application.csproj" />
+  <Project Path="RePlay.Domain/RePlay.Domain.csproj" />
+  <Project Path="RePlay.Infrastructure/RePlay.Infrastructure.csproj" />
+  <Project Path="RePlay.Tests/RePlay.Tests.csproj" />
+</Solution>

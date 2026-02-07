@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  replay-db:
+    image: postgres:16-alpine
+    container_name: replay-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: replay_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ASP.NET Core Backend API
+  replay-backend:
+    build:
+      context: ./replay-api
+      dockerfile: Dockerfile
+    container_name: replay-backend
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - ConnectionStrings__DefaultConnection=Host=replay-db;Port=5432;Database=replay_db;Username=postgres;Password=postgres
+    ports:
+      - "5000:5000"
+    depends_on:
+      replay-db:
+        condition: service_healthy
+    volumes:
+      - ./uploads:/app/uploads
+
+  # Angular Frontend (served via Nginx in production)
+  replay-frontend:
+    build:
+      context: ./replay-ui
+      dockerfile: Dockerfile
+    container_name: replay-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - replay-backend
+
+  # pgAdmin for database management (optional, for development)
+  replay-pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: replay-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@replay.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - replay-db
+    profiles:
+      - dev
+
+volumes:
+  postgres_data:
