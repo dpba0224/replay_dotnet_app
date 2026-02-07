@@ -1,12 +1,25 @@
-C:\Users\user\Desktop\David Polo B. Abrugena\Self-study\ASP.NET\replay_dotnet\replay-api\RePlay.Domain\bin\Debug\net10.0\RePlay.Domain.deps.json
-C:\Users\user\Desktop\David Polo B. Abrugena\Self-study\ASP.NET\replay_dotnet\replay-api\RePlay.Domain\bin\Debug\net10.0\RePlay.Domain.dll
-C:\Users\user\Desktop\David Polo B. Abrugena\Self-study\ASP.NET\replay_dotnet\replay-api\RePlay.Domain\bin\Debug\net10.0\RePlay.Domain.pdb
-C:\Users\user\Desktop\David Polo B. Abrugena\Self-study\ASP.NET\replay_dotnet\replay-api\RePlay.Domain\obj\Debug\net10.0\RePlay.Domain.csproj.AssemblyReference.cache
-C:\Users\user\Desktop\David Polo B. Abrugena\Self-study\ASP.NET\replay_dotnet\replay-api\RePlay.Domain\obj\Debug\net10.0\RePlay.Domain.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\user\Desktop\David Polo B. Abrugena\Self-study\ASP.NET\replay_dotnet\replay-api\RePlay.Domain\obj\Debug\net10.0\RePlay.Domain.AssemblyInfoInputs.cache
-C:\Users\user\Desktop\David Polo B. Abrugena\Self-study\ASP.NET\replay_dotnet\replay-api\RePlay.Domain\obj\Debug\net10.0\RePlay.Domain.AssemblyInfo.cs
-C:\Users\user\Desktop\David Polo B. Abrugena\Self-study\ASP.NET\replay_dotnet\replay-api\RePlay.Domain\obj\Debug\net10.0\RePlay.Domain.csproj.CoreCompileInputs.cache
-C:\Users\user\Desktop\David Polo B. Abrugena\Self-study\ASP.NET\replay_dotnet\replay-api\RePlay.Domain\obj\Debug\net10.0\RePlay.Domain.dll
-C:\Users\user\Desktop\David Polo B. Abrugena\Self-study\ASP.NET\replay_dotnet\replay-api\RePlay.Domain\obj\Debug\net10.0\refint\RePlay.Domain.dll
-C:\Users\user\Desktop\David Polo B. Abrugena\Self-study\ASP.NET\replay_dotnet\replay-api\RePlay.Domain\obj\Debug\net10.0\RePlay.Domain.pdb
-C:\Users\user\Desktop\David Polo B. Abrugena\Self-study\ASP.NET\replay_dotnet\replay-api\RePlay.Domain\obj\Debug\net10.0\ref\RePlay.Domain.dll
+C:/Users/user/Desktop/David Polo B. Abrugena/Self-study/ASP.NET/replay_dotnet/replay-api/RePlay.Domain/bin/Debug/net10.0/RePlay.Domain.deps.json
+C:/Users/user/Desktop/David Polo B. Abrugena/Self-study/ASP.NET/replay_dotnet/replay-api/RePlay.Domain/bin/Debug/net10.0/RePlay.Domain.dll
+C:/Users/user/Desktop/David Polo B. Abrugena/Self-study/ASP.NET/replay_dotnet/replay-api/RePlay.Domain/bin/Debug/net10.0/RePlay.Domain.pdb
+C:/Users/user/Desktop/David Polo B. Abrugena/Self-study/ASP.NET/replay_dotnet/replay-api/RePlay.Domain/obj/Debug/net10.0/RePlay.Domain.csproj.AssemblyReference.cache
+C:/Users/user/Desktop/David Polo B. Abrugena/Self-study/ASP.NET/replay_dotnet/replay-api/RePlay.Domain/obj/Debug/net10.0/RePlay.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/user/Desktop/David Polo B. Abrugena/Self-study/ASP.NET/replay_dotnet/replay-api/RePlay.Domain/obj/Debug/net10.0/RePlay.Domain.AssemblyInfoInputs.cache
+C:/Users/user/Desktop/David Polo B. Abrugena/Self-study/ASP.NET/replay_dotnet/replay-api/RePlay.Domain/obj/Debug/net10.0/RePlay.Domain.AssemblyInfo.cs
+C:/Users/user/Desktop/David Polo B. Abrugena/Self-study/ASP.NET/replay_dotnet/replay-api/RePlay.Domain/obj/Debug/net10.0/RePlay.Domain.csproj.CoreCompileInputs.cache
+C:/Users/user/Desktop/David Polo B. Abrugena/Self-study/ASP.NET/replay_dotnet/replay-api/RePlay.Domain/obj/Debug/net10.0/RePlay.Domain.dll
+C:/Users/user/Desktop/David Polo B. Abrugena/Self-study/ASP.NET/replay_dotnet/replay-api/RePlay.Domain/obj/Debug/net10.0/refint/RePlay.Domain.dll
+C:/Users/user/Desktop/David Polo B. Abrugena/Self-study/ASP.NET/replay_dotnet/replay-api/RePlay.Domain/obj/Debug/net10.0/RePlay.Domain.pdb
+C:/Users/user/Desktop/David Polo B. Abrugena/Self-study/ASP.NET/replay_dotnet/replay-api/RePlay.Domain/obj/Debug/net10.0/ref/RePlay.Domain.dll
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/bin/Debug/net10.0/RePlay.Domain.deps.json
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/bin/Debug/net10.0/RePlay.Domain.dll
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/bin/Debug/net10.0/RePlay.Domain.pdb
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/obj/Debug/net10.0/RePlay.Domain.csproj.AssemblyReference.cache
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/obj/Debug/net10.0/RePlay.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/obj/Debug/net10.0/RePlay.Domain.AssemblyInfoInputs.cache
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/obj/Debug/net10.0/RePlay.Domain.AssemblyInfo.cs
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/obj/Debug/net10.0/RePlay.Domain.csproj.CoreCompileInputs.cache
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/obj/Debug/net10.0/RePlay.Domain.sourcelink.json
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/obj/Debug/net10.0/RePlay.Domain.dll
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/obj/Debug/net10.0/refint/RePlay.Domain.dll
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/obj/Debug/net10.0/RePlay.Domain.pdb
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/obj/Debug/net10.0/ref/RePlay.Domain.dll

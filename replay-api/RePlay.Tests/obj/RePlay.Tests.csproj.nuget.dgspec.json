@@ -1,39 +1,34 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Tests\\RePlay.Tests.csproj": {}
+    "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Tests/RePlay.Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Application\\RePlay.Application.csproj": {
+    "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Application/RePlay.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Application\\RePlay.Application.csproj",
+        "projectUniqueName": "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Application/RePlay.Application.csproj",
         "projectName": "RePlay.Application",
-        "projectPath": "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Application\\RePlay.Application.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Application\\obj\\",
+        "projectPath": "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Application/RePlay.Application.csproj",
+        "packagesPath": "/Users/davidpoloabrugena/.nuget/packages/",
+        "outputPath": "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Application/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/davidpoloabrugena/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Domain\\RePlay.Domain.csproj": {
-                "projectPath": "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Domain\\RePlay.Domain.csproj"
+              "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/RePlay.Domain.csproj": {
+                "projectPath": "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/RePlay.Domain.csproj"
               }
             }
           }
@@ -69,7 +64,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.102/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -347,28 +342,23 @@
         }
       }
     },
-    "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Domain\\RePlay.Domain.csproj": {
+    "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/RePlay.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Domain\\RePlay.Domain.csproj",
+        "projectUniqueName": "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/RePlay.Domain.csproj",
         "projectName": "RePlay.Domain",
-        "projectPath": "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Domain\\RePlay.Domain.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Domain\\obj\\",
+        "projectPath": "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/RePlay.Domain.csproj",
+        "packagesPath": "/Users/davidpoloabrugena/.nuget/packages/",
+        "outputPath": "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/davidpoloabrugena/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -414,7 +404,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.102/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -692,39 +682,34 @@
         }
       }
     },
-    "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Infrastructure\\RePlay.Infrastructure.csproj": {
+    "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Infrastructure/RePlay.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Infrastructure\\RePlay.Infrastructure.csproj",
+        "projectUniqueName": "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Infrastructure/RePlay.Infrastructure.csproj",
         "projectName": "RePlay.Infrastructure",
-        "projectPath": "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Infrastructure\\RePlay.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Infrastructure\\obj\\",
+        "projectPath": "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Infrastructure/RePlay.Infrastructure.csproj",
+        "packagesPath": "/Users/davidpoloabrugena/.nuget/packages/",
+        "outputPath": "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Infrastructure/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/davidpoloabrugena/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Application\\RePlay.Application.csproj": {
-                "projectPath": "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Application\\RePlay.Application.csproj"
+              "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Application/RePlay.Application.csproj": {
+                "projectPath": "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Application/RePlay.Application.csproj"
               },
-              "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Domain\\RePlay.Domain.csproj": {
-                "projectPath": "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Domain\\RePlay.Domain.csproj"
+              "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/RePlay.Domain.csproj": {
+                "projectPath": "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/RePlay.Domain.csproj"
               }
             }
           }
@@ -782,7 +767,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.102/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -1060,42 +1045,37 @@
         }
       }
     },
-    "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Tests\\RePlay.Tests.csproj": {
+    "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Tests/RePlay.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Tests\\RePlay.Tests.csproj",
+        "projectUniqueName": "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Tests/RePlay.Tests.csproj",
         "projectName": "RePlay.Tests",
-        "projectPath": "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Tests\\RePlay.Tests.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Tests\\obj\\",
+        "projectPath": "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Tests/RePlay.Tests.csproj",
+        "packagesPath": "/Users/davidpoloabrugena/.nuget/packages/",
+        "outputPath": "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Tests/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/davidpoloabrugena/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Application\\RePlay.Application.csproj": {
-                "projectPath": "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Application\\RePlay.Application.csproj"
+              "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Application/RePlay.Application.csproj": {
+                "projectPath": "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Application/RePlay.Application.csproj"
               },
-              "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Domain\\RePlay.Domain.csproj": {
-                "projectPath": "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Domain\\RePlay.Domain.csproj"
+              "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/RePlay.Domain.csproj": {
+                "projectPath": "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/RePlay.Domain.csproj"
               },
-              "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Infrastructure\\RePlay.Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\user\\Desktop\\David Polo B. Abrugena\\Self-study\\ASP.NET\\replay_dotnet\\replay-api\\RePlay.Infrastructure\\RePlay.Infrastructure.csproj"
+              "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Infrastructure/RePlay.Infrastructure.csproj": {
+                "projectPath": "/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Infrastructure/RePlay.Infrastructure.csproj"
               }
             }
           }
@@ -1157,7 +1137,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.102/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

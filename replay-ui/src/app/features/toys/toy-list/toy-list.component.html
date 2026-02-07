@@ -1,0 +1,233 @@
+<div class="bg-gray-50 min-h-screen">
+  <!-- Hero Section -->
+  <div class="bg-indigo-600 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl font-bold mb-4">Browse Toys</h1>
+      <p class="text-indigo-100 text-lg">Find the perfect toy to trade or purchase from our curated collection.</p>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="flex flex-col lg:flex-row gap-8">
+      <!-- Filters Sidebar -->
+      <aside class="lg:w-64 flex-shrink-0">
+        <div class="bg-white rounded-lg shadow p-6 sticky top-4">
+          <h2 class="text-lg font-semibold mb-4">Filters</h2>
+
+          <!-- Search -->
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
+            <input
+              type="text"
+              [(ngModel)]="filters.searchTerm"
+              (input)="onSearch()"
+              placeholder="Search toys..."
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+
+          <!-- Category -->
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+            <select
+              [(ngModel)]="filters.category"
+              (change)="loadToys()"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            >
+              <option value="">All Categories</option>
+              @for (cat of categories; track cat.value) {
+                <option [value]="cat.value">{{ cat.label }}</option>
+              }
+            </select>
+          </div>
+
+          <!-- Condition -->
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Min Condition</label>
+            <select
+              [(ngModel)]="filters.minCondition"
+              (change)="loadToys()"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            >
+              <option [ngValue]="undefined">Any Condition</option>
+              @for (cond of conditions; track cond.value) {
+                <option [ngValue]="cond.value">{{ cond.label }} or better</option>
+              }
+            </select>
+          </div>
+
+          <!-- Age Group -->
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Age Group</label>
+            <select
+              [(ngModel)]="filters.ageGroup"
+              (change)="loadToys()"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            >
+              <option value="">All Ages</option>
+              @for (age of ageGroups; track age) {
+                <option [value]="age">{{ age }}</option>
+              }
+            </select>
+          </div>
+
+          <!-- Price Range -->
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Price Range</label>
+            <div class="flex gap-2">
+              <input
+                type="number"
+                [(ngModel)]="filters.minPrice"
+                (change)="loadToys()"
+                placeholder="Min"
+                class="w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              />
+              <input
+                type="number"
+                [(ngModel)]="filters.maxPrice"
+                (change)="loadToys()"
+                placeholder="Max"
+                class="w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              />
+            </div>
+          </div>
+
+          <!-- Clear Filters -->
+          <button
+            (click)="clearFilters()"
+            class="w-full py-2 px-4 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+          >
+            Clear Filters
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1">
+        <!-- Sort and Results Count -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+          <p class="text-gray-600">
+            @if (result()) {
+              Showing {{ result()!.items.length }} of {{ result()!.totalCount }} toys
+            }
+          </p>
+          <select
+            [(ngModel)]="filters.sortBy"
+            (change)="loadToys()"
+            class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          >
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+            <option value="price_asc">Price: Low to High</option>
+            <option value="price_desc">Price: High to Low</option>
+            <option value="name">Name A-Z</option>
+            <option value="condition">Best Condition</option>
+          </select>
+        </div>
+
+        <!-- Loading State -->
+        @if (loading()) {
+          <div class="flex justify-center items-center py-12">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+          </div>
+        }
+
+        <!-- Error State -->
+        @if (error()) {
+          <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
+            {{ error() }}
+          </div>
+        }
+
+        <!-- Toys Grid -->
+        @if (!loading() && result()) {
+          @if (result()!.items.length === 0) {
+            <div class="text-center py-12">
+              <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+              </svg>
+              <h3 class="mt-2 text-sm font-medium text-gray-900">No toys found</h3>
+              <p class="mt-1 text-sm text-gray-500">Try adjusting your filters or search terms.</p>
+            </div>
+          } @else {
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              @for (toy of result()!.items; track toy.id) {
+                <a [routerLink]="['/toys', toy.id]" class="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                  <!-- Image -->
+                  <div class="aspect-square bg-gray-100 relative overflow-hidden">
+                    @if (toy.images.length > 0) {
+                      <img
+                        [src]="toyService.getImageUrl(toy.images[0].imagePath)"
+                        [alt]="toy.name"
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    } @else {
+                      <div class="w-full h-full flex items-center justify-center text-gray-400">
+                        <svg class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                    }
+                    <!-- Status Badge -->
+                    <div class="absolute top-2 right-2">
+                      <span
+                        [class]="getStatusBadgeClass(toy.status)"
+                        class="px-2 py-1 text-xs font-medium rounded-full"
+                      >
+                        {{ toy.status }}
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Content -->
+                  <div class="p-4">
+                    <h3 class="text-lg font-semibold text-gray-900 group-hover:text-indigo-600 line-clamp-1">
+                      {{ toy.name }}
+                    </h3>
+                    <p class="text-sm text-gray-500 mt-1 line-clamp-2">{{ toy.description }}</p>
+
+                    <div class="mt-3 flex items-center justify-between">
+                      <span class="text-xl font-bold text-indigo-600">${{ toy.price.toFixed(2) }}</span>
+                      <span [class]="getConditionBadgeClass(toy.condition)" class="px-2 py-1 text-xs font-medium rounded">
+                        {{ toy.conditionLabel }}
+                      </span>
+                    </div>
+
+                    <div class="mt-2 flex items-center text-sm text-gray-500">
+                      <span class="truncate">{{ toyService.getCategoryLabel(toy.category) }}</span>
+                      <span class="mx-2">|</span>
+                      <span>{{ toy.ageGroup }}</span>
+                    </div>
+                  </div>
+                </a>
+              }
+            </div>
+
+            <!-- Pagination -->
+            @if (result()!.totalPages > 1) {
+              <div class="mt-8 flex justify-center items-center gap-2">
+                <button
+                  (click)="goToPage(filters.pageNumber! - 1)"
+                  [disabled]="!result()!.hasPreviousPage"
+                  class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Previous
+                </button>
+                <span class="text-gray-600">
+                  Page {{ result()!.pageNumber }} of {{ result()!.totalPages }}
+                </span>
+                <button
+                  (click)="goToPage(filters.pageNumber! + 1)"
+                  [disabled]="!result()!.hasNextPage"
+                  class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Next
+                </button>
+              </div>
+            }
+          }
+        }
+      </main>
+    </div>
+  </div>
+</div>
