@@ -236,6 +236,17 @@ public class ToyService : IToyService
         return imagePath;
     }
 
+    public async Task<List<ToyDto>> GetToysByHolderAsync(Guid userId)
+    {
+        var toys = await _context.Toys
+            .Include(t => t.Images.OrderBy(i => i.DisplayOrder))
+            .Where(t => t.CurrentHolderId == userId && !t.IsArchived)
+            .OrderByDescending(t => t.UpdatedAt)
+            .ToListAsync();
+
+        return toys.Select(MapToDto).ToList();
+    }
+
     public async Task<bool> RemoveToyImageAsync(Guid toyId, Guid imageId)
     {
         var image = await _context.Set<ToyImage>()

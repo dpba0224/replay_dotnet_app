@@ -80,6 +80,23 @@ public class ToysController : ControllerBase
     }
 
     /// <summary>
+    /// Get toys currently held by the authenticated user
+    /// </summary>
+    [HttpGet("mine")]
+    [Authorize]
+    [ProducesResponseType(typeof(List<ToyDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult<List<ToyDto>>> GetMyToys()
+    {
+        var userId = GetCurrentUserId();
+        if (userId == Guid.Empty)
+            return Unauthorized(new { message = "User not authenticated" });
+
+        var toys = await _toyService.GetToysByHolderAsync(userId);
+        return Ok(toys);
+    }
+
+    /// <summary>
     /// Create a new toy (Admin only)
     /// </summary>
     [HttpPost]

@@ -1,0 +1,112 @@
+<div class="bg-gray-50 min-h-screen py-12">
+  <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Loading -->
+    @if (loading()) {
+      <div class="flex justify-center items-center py-12">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+      </div>
+    }
+
+    <!-- Error -->
+    @if (error()) {
+      <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+        <div class="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center">
+          <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </div>
+        <h2 class="text-xl font-semibold text-gray-900 mb-2">Something went wrong</h2>
+        <p class="text-gray-600 mb-6">{{ error() }}</p>
+        <a routerLink="/" class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+          Back to Browse
+        </a>
+      </div>
+    }
+
+    <!-- Success -->
+    @if (!loading() && trade()) {
+      <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+        <!-- Success Icon -->
+        <div class="w-20 h-20 mx-auto mb-6 bg-green-100 rounded-full flex items-center justify-center">
+          <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+
+        <h1 class="text-2xl font-bold text-gray-900 mb-2">
+          @if (trade()!.tradeType === 'Purchase') {
+            Payment Successful!
+          } @else {
+            Trade Request Submitted!
+          }
+        </h1>
+
+        <p class="text-gray-600 mb-8">
+          @if (trade()!.tradeType === 'Purchase') {
+            Your purchase has been completed. The toy will be assigned to your account.
+          } @else {
+            Your trade request is pending admin approval. You'll be notified once it's reviewed.
+          }
+        </p>
+
+        <!-- Trade Summary -->
+        <div class="bg-gray-50 rounded-lg p-6 mb-8 text-left">
+          <h3 class="text-sm font-medium text-gray-500 uppercase mb-4">Order Summary</h3>
+
+          <div class="flex items-center gap-4 mb-4">
+            @if (trade()!.requestedToy.images.length > 0) {
+              <img
+                [src]="toyService.getImageUrl(trade()!.requestedToy.images[0].imagePath)"
+                [alt]="trade()!.requestedToy.name"
+                class="w-20 h-20 rounded-lg object-cover"
+              />
+            } @else {
+              <div class="w-20 h-20 rounded-lg bg-gray-200 flex items-center justify-center">
+                <svg class="w-8 h-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+            }
+            <div>
+              <p class="font-semibold text-gray-900">{{ trade()!.requestedToy.name }}</p>
+              <p class="text-sm text-gray-500">{{ trade()!.requestedToy.category }}</p>
+            </div>
+          </div>
+
+          <div class="border-t border-gray-200 pt-4 space-y-2">
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-500">Type</span>
+              <span class="font-medium">{{ trade()!.tradeType }}</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-500">Status</span>
+              <span class="font-medium">{{ trade()!.status }}</span>
+            </div>
+            @if (trade()!.amountPaid) {
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-500">Amount Paid</span>
+                <span class="font-bold text-indigo-600">&#8369;{{ trade()!.amountPaid!.toFixed(2) }}</span>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <a
+            routerLink="/trades/history"
+            class="px-6 py-2.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+          >
+            View My Trades
+          </a>
+          <a
+            routerLink="/"
+            class="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+          >
+            Continue Browsing
+          </a>
+        </div>
+      </div>
+    }
+  </div>
+</div>

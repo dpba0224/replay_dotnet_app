@@ -36,12 +36,18 @@ public static class DependencyInjection
         // Configure File Upload Settings
         services.Configure<FileUploadSettings>(configuration.GetSection("FileUpload"));
 
+        // Configure Stripe Settings
+        services.Configure<StripeSettings>(configuration.GetSection("StripeSettings"));
+
         // Register Services
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IToyService, ToyService>();
         services.AddScoped<IFileUploadService, FileUploadService>();
+        services.AddScoped<ITradeService, TradeService>();
+        services.AddScoped<IPaymentService, PaymentService>();
+        services.AddScoped<IReturnService, ReturnService>();
 
         // Memory Cache for tokens
         services.AddMemoryCache();

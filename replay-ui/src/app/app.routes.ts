@@ -48,6 +48,14 @@ export const routes: Routes = [
       {
         path: 'history',
         loadComponent: () => import('./features/trades/trade-history/trade-history.component').then(m => m.TradeHistoryComponent)
+      },
+      {
+        path: ':id/success',
+        loadComponent: () => import('./features/trades/trade-success/trade-success.component').then(m => m.TradeSuccessComponent)
+      },
+      {
+        path: ':id',
+        loadComponent: () => import('./features/trades/trade-detail/trade-detail.component').then(m => m.TradeDetailComponent)
       }
     ]
   },

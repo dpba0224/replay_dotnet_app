@@ -118,6 +118,10 @@ export class ToyService {
     return this.http.get<PagedResult<Toy>>(this.apiUrl, { params: httpParams });
   }
 
+  getMyToys(): Observable<Toy[]> {
+    return this.http.get<Toy[]>(`${this.apiUrl}/mine`);
+  }
+
   getToyById(id: string): Observable<Toy> {
     return this.http.get<Toy>(`${this.apiUrl}/${id}`);
   }

@@ -14,6 +14,7 @@ public interface IToyService
     Task<bool> RestoreToyAsync(Guid id);
     Task<string> AddToyImageAsync(Guid toyId, string imagePath, int displayOrder);
     Task<bool> RemoveToyImageAsync(Guid toyId, Guid imageId);
+    Task<List<ToyDto>> GetToysByHolderAsync(Guid userId);
 }
 
 public class ToyQueryParameters

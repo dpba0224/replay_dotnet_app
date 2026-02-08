@@ -277,3 +277,6 @@ C:/Users/user/Desktop/David Polo B. Abrugena/Self-study/ASP.NET/replay_dotnet/re
 /Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.API/obj/Debug/net10.0/RePlay.API.pdb
 /Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.API/obj/Debug/net10.0/RePlay.API.genruntimeconfig.cache
 /Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.API/obj/Debug/net10.0/ref/RePlay.API.dll
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.API/bin/Debug/net10.0/Stripe.net.dll
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.API/bin/Debug/net10.0/System.Configuration.ConfigurationManager.dll
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.API/bin/Debug/net10.0/System.Security.Cryptography.ProtectedData.dll

@@ -1,13 +1,16 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { ToyService, Toy, ToyConditions } from '../../../core/services/toy.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { TradeService, CreateTradeDto } from '../../../core/services/trade.service';
+import { PaymentService } from '../../../core/services/payment.service';
 
 @Component({
   selector: 'app-toy-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './toy-detail.component.html',
   styleUrl: './toy-detail.component.css'
 })
@@ -18,11 +21,21 @@ export class ToyDetailComponent implements OnInit {
   selectedImageIndex = signal(0);
   copied = signal(false);
 
+  // Trade/Buy modal state
+  showTradeModal = signal(false);
+  tradeMode = signal<'trade' | 'buy'>('buy');
+  tradeNotes = '';
+  tradeSubmitting = signal(false);
+  tradeError = signal('');
+  tradeSuccess = signal('');
+
   conditions = ToyConditions;
 
   constructor(
     public toyService: ToyService,
     public authService: AuthService,
+    private tradeService: TradeService,
+    private paymentService: PaymentService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -46,6 +59,82 @@ export class ToyDetailComponent implements OnInit {
       error: (err) => {
         this.error.set(err.error?.message || 'Failed to load toy');
         this.loading.set(false);
+      }
+    });
+  }
+
+  openTradeModal(): void {
+    this.tradeMode.set('trade');
+    this.tradeNotes = '';
+    this.tradeError.set('');
+    this.tradeSuccess.set('');
+    this.showTradeModal.set(true);
+  }
+
+  openBuyModal(): void {
+    this.tradeMode.set('buy');
+    this.tradeNotes = '';
+    this.tradeError.set('');
+    this.tradeSuccess.set('');
+    this.showTradeModal.set(true);
+  }
+
+  closeTradeModal(): void {
+    this.showTradeModal.set(false);
+  }
+
+  submitTrade(): void {
+    const toy = this.toy();
+    if (!toy) return;
+
+    this.tradeSubmitting.set(true);
+    this.tradeError.set('');
+
+    const dto: CreateTradeDto = {
+      requestedToyId: toy.id,
+      tradeType: this.tradeMode() === 'trade' ? 0 : 1,
+      notes: this.tradeNotes || undefined
+    };
+
+    this.tradeService.createTrade(dto).subscribe({
+      next: (result) => {
+        this.tradeSubmitting.set(false);
+        if (result.succeeded && result.trade) {
+          if (this.tradeMode() === 'buy') {
+            // For purchase: create Stripe checkout session
+            this.createCheckout(result.trade.id);
+          } else {
+            // For trade: show success and redirect
+            this.tradeSuccess.set('Trade request submitted successfully! An admin will review it shortly.');
+            setTimeout(() => {
+              this.closeTradeModal();
+              this.router.navigate(['/trades/history']);
+            }, 2000);
+          }
+        } else {
+          this.tradeError.set(result.message || 'Failed to create trade request.');
+        }
+      },
+      error: (err) => {
+        this.tradeSubmitting.set(false);
+        this.tradeError.set(err.error?.message || 'Failed to create trade request.');
+      }
+    });
+  }
+
+  private createCheckout(tradeId: string): void {
+    this.paymentService.createCheckoutSession(tradeId).subscribe({
+      next: (result) => {
+        this.tradeSubmitting.set(false);
+        if (result.succeeded && result.checkoutUrl) {
+          this.paymentService.redirectToCheckout(result.checkoutUrl);
+        } else {
+          this.tradeError.set(result.message || 'Failed to create checkout session.');
+        }
+      },
+      error: (err) => {
+        this.tradeSubmitting.set(false);
+        this.tradeError.set(err.error?.message || 'Failed to start payment process.');
       }
     });
   }

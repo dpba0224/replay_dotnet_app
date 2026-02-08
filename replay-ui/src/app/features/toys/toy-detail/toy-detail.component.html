@@ -82,7 +82,7 @@
 
             <!-- Price -->
             <div class="text-3xl font-bold text-indigo-600 mb-6">
-              ${{ toy()!.price.toFixed(2) }}
+              &#8369;{{ toy()!.price.toFixed(2) }}
             </div>
 
             <!-- Meta Info -->
@@ -124,14 +124,16 @@
               <div class="space-y-3">
                 @if (authService.isAuthenticated()) {
                   <button
+                    (click)="openTradeModal()"
                     class="w-full py-3 px-4 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-colors"
                   >
                     Trade for This Toy
                   </button>
                   <button
+                    (click)="openBuyModal()"
                     class="w-full py-3 px-4 border-2 border-indigo-600 text-indigo-600 font-medium rounded-lg hover:bg-indigo-50 transition-colors"
                   >
-                    Buy This Toy - ${{ toy()!.price.toFixed(2) }}
+                    Buy This Toy - &#8369;{{ toy()!.price.toFixed(2) }}
                   </button>
                 } @else {
                   <a
@@ -172,3 +174,129 @@
     }
   </div>
 </div>
+
+<!-- Trade/Buy Modal -->
+@if (showTradeModal()) {
+  <div class="fixed inset-0 z-50 overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20">
+      <!-- Backdrop -->
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" (click)="closeTradeModal()"></div>
+
+      <!-- Modal Panel -->
+      <div class="relative bg-white rounded-lg shadow-xl max-w-lg w-full z-10">
+        <div class="px-6 py-4 border-b border-gray-200">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold text-gray-900">
+              @if (tradeMode() === 'trade') {
+                Trade for This Toy
+              } @else {
+                Buy This Toy
+              }
+            </h3>
+            <button (click)="closeTradeModal()" class="text-gray-400 hover:text-gray-600">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="px-6 py-4">
+          <!-- Success Message -->
+          @if (tradeSuccess()) {
+            <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4">
+              {{ tradeSuccess() }}
+            </div>
+          }
+
+          <!-- Error Message -->
+          @if (tradeError()) {
+            <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
+              {{ tradeError() }}
+            </div>
+          }
+
+          @if (!tradeSuccess()) {
+            <!-- Toy Summary -->
+            <div class="flex items-center gap-4 mb-6 p-4 bg-gray-50 rounded-lg">
+              @if (toy()!.images.length > 0) {
+                <img
+                  [src]="toyService.getImageUrl(toy()!.images[0].imagePath)"
+                  [alt]="toy()!.name"
+                  class="w-16 h-16 rounded-lg object-cover"
+                />
+              }
+              <div>
+                <p class="font-semibold text-gray-900">{{ toy()!.name }}</p>
+                <p class="text-sm text-gray-500">{{ toyService.getCategoryLabel(toy()!.category) }}</p>
+                @if (tradeMode() === 'buy') {
+                  <p class="text-indigo-600 font-bold">&#8369;{{ toy()!.price.toFixed(2) }}</p>
+                }
+              </div>
+            </div>
+
+            <!-- Trade Mode Info -->
+            @if (tradeMode() === 'trade') {
+              <div class="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <p class="text-sm text-blue-800">
+                  <span class="font-semibold">How trading works:</span> Submit a trade request and an admin will review it.
+                  You will need to send your offered toy to the platform for inspection before the trade is approved.
+                </p>
+              </div>
+            } @else {
+              <div class="mb-4 p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
+                <p class="text-sm text-indigo-800">
+                  <span class="font-semibold">How purchasing works:</span> You'll be redirected to a secure Stripe checkout page
+                  to complete your payment. The toy will be assigned to you once payment is confirmed.
+                </p>
+              </div>
+            }
+
+            <!-- Notes -->
+            <div class="mb-6">
+              <label for="tradeNotes" class="block text-sm font-medium text-gray-700 mb-1">
+                Notes (optional)
+              </label>
+              <textarea
+                id="tradeNotes"
+                [(ngModel)]="tradeNotes"
+                rows="3"
+                placeholder="Add any notes about this trade request..."
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+              ></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="flex gap-3">
+              <button
+                (click)="closeTradeModal()"
+                class="flex-1 py-2.5 px-4 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                (click)="submitTrade()"
+                [disabled]="tradeSubmitting()"
+                class="flex-1 py-2.5 px-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                @if (tradeSubmitting()) {
+                  <span class="flex items-center justify-center gap-2">
+                    <svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                    </svg>
+                    Processing...
+                  </span>
+                } @else if (tradeMode() === 'trade') {
+                  Submit Trade Request
+                } @else {
+                  Proceed to Payment
+                }
+              </button>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+}

@@ -15,6 +15,7 @@ export class ToyListComponent implements OnInit {
   result = signal<PagedResult<Toy> | null>(null);
   loading = signal(false);
   error = signal('');
+  showFilters = signal(false);
 
   filters: ToyQueryParams = {
     pageNumber: 1,
@@ -58,6 +59,11 @@ export class ToyListComponent implements OnInit {
     }, 300);
   }
 
+  onFilterChange(): void {
+    this.filters.pageNumber = 1;
+    this.loadToys();
+  }
+
   clearFilters(): void {
     this.filters = {
       pageNumber: 1,
@@ -65,6 +71,22 @@ export class ToyListComponent implements OnInit {
       sortBy: 'newest'
     };
     this.loadToys();
+  }
+
+  toggleFilters(): void {
+    this.showFilters.update(v => !v);
+  }
+
+  hasActiveFilters(): boolean {
+    return !!(
+      this.filters.searchTerm ||
+      this.filters.category ||
+      this.filters.minCondition ||
+      this.filters.ageGroup ||
+      this.filters.minPrice ||
+      this.filters.maxPrice ||
+      this.filters.status
+    );
   }
 
   goToPage(page: number): void {
@@ -81,6 +103,8 @@ export class ToyListComponent implements OnInit {
         return 'bg-yellow-100 text-yellow-800';
       case 'Traded':
         return 'bg-blue-100 text-blue-800';
+      case 'Sold':
+        return 'bg-purple-100 text-purple-800';
       default:
         return 'bg-gray-100 text-gray-800';
     }
