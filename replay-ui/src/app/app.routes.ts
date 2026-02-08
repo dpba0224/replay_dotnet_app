@@ -42,6 +42,11 @@ export const routes: Routes = [
     ]
   },
   {
+    path: 'my-toys',
+    canActivate: [authGuard],
+    loadComponent: () => import('./features/toys/my-toys/my-toys.component').then(m => m.MyToysComponent)
+  },
+  {
     path: 'trades',
     canActivate: [authGuard],
     children: [
@@ -62,7 +67,16 @@ export const routes: Routes = [
   {
     path: 'messages',
     canActivate: [authGuard],
-    loadComponent: () => import('./features/messages/messages.component').then(m => m.MessagesComponent)
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./features/messages/messages.component').then(m => m.MessagesComponent)
+      },
+      {
+        path: ':userId',
+        loadComponent: () => import('./features/messages/conversation/conversation.component').then(m => m.ConversationComponent)
+      }
+    ]
   },
   {
     path: 'profile',

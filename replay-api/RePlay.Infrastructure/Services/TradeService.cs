@@ -234,7 +234,7 @@ public class TradeService : ITradeService
             RelatedTradeId = trade.Id,
             Description = trade.TradeType == TradeType.Trade
                 ? $"Traded for {requestedToy.Name}"
-                : $"Purchased {requestedToy.Name} for ${trade.AmountPaid:F2}",
+                : $"Purchased {requestedToy.Name} for ₱{trade.AmountPaid:F2}",
             AmountPaid = trade.AmountPaid,
             CreatedAt = DateTime.UtcNow
         };
@@ -260,15 +260,15 @@ public class TradeService : ITradeService
         return TradeResult.Success(MapToDto(approvedTrade!), "Trade approved successfully.");
     }
 
-    public async Task<TradeResult> CancelTradeAsync(Guid tradeId, Guid userId)
+    public async Task<TradeResult> CancelTradeAsync(Guid tradeId, Guid userId, bool isAdmin = false)
     {
         var trade = await GetTradeEntityAsync(tradeId);
 
         if (trade == null)
             return TradeResult.Failure("Trade not found.");
 
-        // Only the trade creator can cancel
-        if (trade.UserId != userId)
+        // Only the trade creator or an admin can cancel
+        if (!isAdmin && trade.UserId != userId)
             return TradeResult.Failure("You can only cancel your own trade requests.");
 
         if (trade.Status != TradeStatus.Pending)

@@ -211,8 +211,14 @@ public class ReturnService : IReturnService
         var toy = await _context.Toys.FindAsync(toyReturn.ToyId);
         if (toy != null && toy.Status == ToyStatus.PendingReturn)
         {
-            // Restore to previous state (Traded or Sold based on how user got it)
-            toy.Status = ToyStatus.Traded;
+            // Determine previous status from the last completed trade for this toy
+            var lastTrade = await _context.Trades
+                .Where(t => t.RequestedToyId == toy.Id && t.UserId == toyReturn.ReturnedByUserId
+                    && (t.Status == TradeStatus.Approved || t.Status == TradeStatus.Completed))
+                .OrderByDescending(t => t.CompletedAt)
+                .FirstOrDefaultAsync();
+
+            toy.Status = lastTrade?.TradeType == TradeType.Purchase ? ToyStatus.Sold : ToyStatus.Traded;
             toy.UpdatedAt = DateTime.UtcNow;
         }
 

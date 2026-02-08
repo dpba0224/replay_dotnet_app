@@ -1,4 +1,446 @@
 <div class="container mx-auto px-4 py-8">
-  <h1 class="text-3xl font-bold mb-6">Trade Monitor</h1>
-  <p class="text-gray-600">Monitor and manage trades here.</p>
+  <h1 class="text-3xl font-bold mb-2">Trade & Return Monitor</h1>
+  <p class="text-gray-600 mb-6">Manage trade requests and return approvals.</p>
+
+  <!-- Tabs -->
+  <div class="border-b border-gray-200 mb-6">
+    <nav class="flex space-x-8">
+      <button
+        (click)="switchTab('trades')"
+        class="py-4 px-1 border-b-2 font-medium text-sm"
+        [class]="activeTab() === 'trades' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+      >
+        Trades
+      </button>
+      <button
+        (click)="switchTab('returns')"
+        class="py-4 px-1 border-b-2 font-medium text-sm"
+        [class]="activeTab() === 'returns' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+      >
+        Returns
+        @if (getPendingReturnCount() > 0) {
+          <span class="ml-2 bg-red-100 text-red-600 py-0.5 px-2.5 rounded-full text-xs font-medium">
+            {{ getPendingReturnCount() }}
+          </span>
+        }
+      </button>
+    </nav>
+  </div>
+
+  <!-- ==================== TRADES TAB ==================== -->
+  @if (activeTab() === 'trades') {
+    <!-- Filters -->
+    <div class="flex flex-wrap gap-4 mb-6">
+      <select
+        [(ngModel)]="tradeFilters.status"
+        (change)="onTradeFilterChange()"
+        class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+      >
+        <option value="">All Statuses</option>
+        <option value="0">Pending</option>
+        <option value="1">Approved</option>
+        <option value="2">Completed</option>
+        <option value="3">Rejected</option>
+        <option value="4">Cancelled</option>
+      </select>
+      <select
+        [(ngModel)]="tradeFilters.type"
+        (change)="onTradeFilterChange()"
+        class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+      >
+        <option value="">All Types</option>
+        <option value="0">Trade</option>
+        <option value="1">Purchase</option>
+      </select>
+    </div>
+
+    @if (tradesError()) {
+      <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
+        {{ tradesError() }}
+      </div>
+    }
+
+    @if (tradesLoading()) {
+      <div class="flex justify-center py-12">
+        <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600"></div>
+      </div>
+    }
+
+    @if (!tradesLoading() && trades()) {
+      @if (trades()!.items.length === 0) {
+        <div class="text-center py-12 text-gray-500">No trades found.</div>
+      } @else {
+        <div class="bg-white shadow rounded-lg overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">User</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Requested Toy</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              @for (trade of trades()!.items; track trade.id) {
+                <tr>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm font-medium text-gray-900">{{ trade.user.fullName }}</div>
+                    <div class="text-sm text-gray-500">{{ trade.user.email }}</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900">{{ trade.requestedToy.name }}</div>
+                    <div class="text-sm text-gray-500">&#8369;{{ trade.requestedToy.price.toFixed(2) }}</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span class="text-sm text-gray-900">{{ tradeService.getTradeTypeLabel(trade.tradeType) }}</span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span [class]="tradeService.getStatusBadgeClass(trade.status)" class="px-2 py-1 text-xs font-medium rounded-full">
+                      {{ trade.status }}
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {{ trade.createdAt | date:'shortDate' }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm">
+                    @if (trade.status === 'Pending') {
+                      <button
+                        (click)="approveTrade(trade)"
+                        class="text-green-600 hover:text-green-900 mr-3"
+                      >
+                        Approve
+                      </button>
+                      <button
+                        (click)="cancelTrade(trade)"
+                        class="text-red-600 hover:text-red-900"
+                      >
+                        Cancel
+                      </button>
+                    } @else {
+                      <span class="text-gray-400">-</span>
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Trade Pagination -->
+        @if (trades()!.totalPages > 1) {
+          <div class="mt-4 flex justify-center items-center gap-2">
+            <button
+              (click)="goToTradePage(tradeFilters.pageNumber! - 1)"
+              [disabled]="!trades()!.hasPreviousPage"
+              class="px-4 py-2 border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Previous
+            </button>
+            <span class="text-sm text-gray-600">
+              Page {{ trades()!.pageNumber }} of {{ trades()!.totalPages }}
+            </span>
+            <button
+              (click)="goToTradePage(tradeFilters.pageNumber! + 1)"
+              [disabled]="!trades()!.hasNextPage"
+              class="px-4 py-2 border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
+          </div>
+        }
+      }
+    }
+  }
+
+  <!-- ==================== RETURNS TAB ==================== -->
+  @if (activeTab() === 'returns') {
+    <!-- Filters -->
+    <div class="flex flex-wrap gap-4 mb-6">
+      <select
+        [(ngModel)]="returnFilters.status"
+        (change)="onReturnFilterChange()"
+        class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+      >
+        <option value="">All Statuses</option>
+        <option value="0">Pending</option>
+        <option value="1">Approved</option>
+        <option value="2">Rejected</option>
+      </select>
+    </div>
+
+    @if (returnsError()) {
+      <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
+        {{ returnsError() }}
+      </div>
+    }
+
+    @if (returnsLoading()) {
+      <div class="flex justify-center py-12">
+        <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600"></div>
+      </div>
+    }
+
+    @if (!returnsLoading() && returns()) {
+      @if (returns()!.items.length === 0) {
+        <div class="text-center py-12 text-gray-500">No returns found.</div>
+      } @else {
+        <div class="space-y-4">
+          @for (ret of returns()!.items; track ret.id) {
+            <div class="bg-white shadow rounded-lg p-6">
+              <div class="flex flex-col lg:flex-row gap-4">
+                <!-- Toy Info -->
+                <div class="flex items-start gap-4 flex-1">
+                  <div class="w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                    @if (ret.toy.images.length > 0) {
+                      <img
+                        [src]="toyService.getImageUrl(ret.toy.images[0].imagePath)"
+                        [alt]="ret.toy.name"
+                        class="w-full h-full object-cover"
+                      />
+                    } @else {
+                      <div class="w-full h-full flex items-center justify-center text-gray-400">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                    }
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-semibold text-gray-900">{{ ret.toy.name }}</h3>
+                    <p class="text-sm text-gray-500">&#8369;{{ ret.toy.price.toFixed(2) }} &middot; {{ ret.toy.conditionLabel }}</p>
+                    <p class="text-sm text-gray-500 mt-1">
+                      Returned by: <span class="font-medium">{{ ret.returnedByUser.fullName }}</span>
+                      ({{ ret.returnedByUser.email }})
+                    </p>
+                    @if (ret.userNotes) {
+                      <p class="text-sm text-gray-600 mt-1">
+                        <span class="font-medium">User notes:</span> {{ ret.userNotes }}
+                      </p>
+                    }
+                    @if (ret.adminNotes) {
+                      <p class="text-sm text-gray-600 mt-1">
+                        <span class="font-medium">Admin notes:</span> {{ ret.adminNotes }}
+                      </p>
+                    }
+                    <p class="text-xs text-gray-400 mt-1">Submitted: {{ ret.createdAt | date:'medium' }}</p>
+                  </div>
+                </div>
+
+                <!-- Status & Actions -->
+                <div class="flex flex-col items-end gap-3 flex-shrink-0">
+                  <span
+                    [class]="returnService.getStatusBadgeClass(ret.status)"
+                    class="px-3 py-1 text-xs font-medium rounded-full"
+                  >
+                    {{ ret.status }}
+                  </span>
+
+                  @if (ret.status === 'Pending') {
+                    <div class="flex gap-2">
+                      <button
+                        (click)="openApproveModal(ret)"
+                        class="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700"
+                      >
+                        Approve
+                      </button>
+                      <button
+                        (click)="openRejectModal(ret)"
+                        class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700"
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  }
+
+                  @if (ret.resolvedAt) {
+                    <span class="text-xs text-gray-400">Resolved: {{ ret.resolvedAt | date:'medium' }}</span>
+                  }
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Return Pagination -->
+        @if (returns()!.totalPages > 1) {
+          <div class="mt-4 flex justify-center items-center gap-2">
+            <button
+              (click)="goToReturnPage(returnFilters.pageNumber! - 1)"
+              [disabled]="!returns()!.hasPreviousPage"
+              class="px-4 py-2 border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Previous
+            </button>
+            <span class="text-sm text-gray-600">
+              Page {{ returns()!.pageNumber }} of {{ returns()!.totalPages }}
+            </span>
+            <button
+              (click)="goToReturnPage(returnFilters.pageNumber! + 1)"
+              [disabled]="!returns()!.hasNextPage"
+              class="px-4 py-2 border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
+          </div>
+        }
+      }
+    }
+  }
 </div>
+
+<!-- ==================== APPROVE RETURN MODAL ==================== -->
+@if (showApproveModal() && selectedReturn()) {
+  <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-lg shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+      <div class="p-6">
+        <h2 class="text-xl font-bold text-gray-900 mb-4">Approve Return</h2>
+
+        @if (approveError()) {
+          <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
+            {{ approveError() }}
+          </div>
+        }
+
+        <!-- Toy summary -->
+        <div class="p-3 bg-gray-50 rounded-lg mb-4">
+          <p class="font-semibold text-gray-900">{{ selectedReturn()!.toy.name }}</p>
+          <p class="text-sm text-gray-500">
+            Returned by: {{ selectedReturn()!.returnedByUser.fullName }}
+          </p>
+          @if (selectedReturn()!.userNotes) {
+            <p class="text-sm text-gray-600 mt-1">User notes: {{ selectedReturn()!.userNotes }}</p>
+          }
+        </div>
+
+        <!-- Condition on return -->
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-1">Toy Condition on Return *</label>
+          <select
+            [(ngModel)]="approveForm.conditionOnReturn"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          >
+            @for (cond of conditions; track cond.value) {
+              <option [ngValue]="cond.value">{{ cond.label }} - {{ cond.description }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Admin notes -->
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-1">Admin Notes</label>
+          <textarea
+            [(ngModel)]="approveForm.adminNotes"
+            rows="2"
+            placeholder="Optional notes about the return..."
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          ></textarea>
+        </div>
+
+        <!-- User Rating -->
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-1">Rate User (optional, 1-5)</label>
+          <select
+            [(ngModel)]="approveForm.userRating"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          >
+            <option [ngValue]="undefined">No rating</option>
+            <option [ngValue]="1">1 - Poor</option>
+            <option [ngValue]="2">2 - Below Average</option>
+            <option [ngValue]="3">3 - Average</option>
+            <option [ngValue]="4">4 - Good</option>
+            <option [ngValue]="5">5 - Excellent</option>
+          </select>
+        </div>
+
+        @if (approveForm.userRating) {
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Rating Comment</label>
+            <input
+              type="text"
+              [(ngModel)]="approveForm.ratingComment"
+              placeholder="Comment for the rating..."
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+        }
+
+        <!-- Actions -->
+        <div class="flex gap-3 mt-6">
+          <button
+            (click)="closeApproveModal()"
+            [disabled]="approveSubmitting()"
+            class="flex-1 px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+          >
+            Cancel
+          </button>
+          <button
+            (click)="submitApproval()"
+            [disabled]="approveSubmitting()"
+            class="flex-1 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50"
+          >
+            @if (approveSubmitting()) {
+              Approving...
+            } @else {
+              Approve Return
+            }
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- ==================== REJECT RETURN MODAL ==================== -->
+@if (showRejectModal() && selectedReturn()) {
+  <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
+      <div class="p-6">
+        <h2 class="text-xl font-bold text-gray-900 mb-4">Reject Return</h2>
+
+        @if (rejectError()) {
+          <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
+            {{ rejectError() }}
+          </div>
+        }
+
+        <div class="p-3 bg-gray-50 rounded-lg mb-4">
+          <p class="font-semibold text-gray-900">{{ selectedReturn()!.toy.name }}</p>
+          <p class="text-sm text-gray-500">Returned by: {{ selectedReturn()!.returnedByUser.fullName }}</p>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-1">Rejection Reason *</label>
+          <textarea
+            [(ngModel)]="rejectNotes"
+            rows="3"
+            placeholder="Explain why this return is being rejected..."
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          ></textarea>
+        </div>
+
+        <div class="flex gap-3">
+          <button
+            (click)="closeRejectModal()"
+            [disabled]="rejectSubmitting()"
+            class="flex-1 px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+          >
+            Cancel
+          </button>
+          <button
+            (click)="submitRejection()"
+            [disabled]="rejectSubmitting() || !rejectNotes.trim()"
+            class="flex-1 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 disabled:opacity-50"
+          >
+            @if (rejectSubmitting()) {
+              Rejecting...
+            } @else {
+              Reject Return
+            }
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

@@ -1,10 +1,9 @@
 # RePlay — Toy Trading Web Application Project Plan
 
 > **Version:** 1.0 (MVP)
-> **Author:** Solo Developer
+> **Author:** David Polo Abrugena
 > **Project Type:** Portfolio / Learning Project
-> **Target Timeline:** 1 Month (4 Sprints × ~7 days each)
-> **Last Updated:** February 7, 2026
+
 
 ---
 

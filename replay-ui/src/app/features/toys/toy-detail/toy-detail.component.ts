@@ -50,6 +50,7 @@ export class ToyDetailComponent implements OnInit {
   loadToy(id: string): void {
     this.loading.set(true);
     this.error.set('');
+    this.selectedImageIndex.set(0);
 
     this.toyService.getToyById(id).subscribe({
       next: (toy) => {

@@ -9,7 +9,7 @@ public interface ITradeService
     Task<PagedResult<TradeDto>> GetAllTradesAsync(TradeQueryParameters parameters);
     Task<TradeDto?> GetTradeByIdAsync(Guid id, Guid userId);
     Task<TradeResult> ApproveTradeAsync(Guid tradeId, Guid adminId);
-    Task<TradeResult> CancelTradeAsync(Guid tradeId, Guid userId);
+    Task<TradeResult> CancelTradeAsync(Guid tradeId, Guid userId, bool isAdmin = false);
 }
 
 public class CreateTradeDto

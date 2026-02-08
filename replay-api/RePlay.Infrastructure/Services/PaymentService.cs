@@ -188,7 +188,7 @@ public class PaymentService : IPaymentService
             Type = TransactionType.Purchase,
             ToyId = trade.RequestedToyId,
             RelatedTradeId = trade.Id,
-            Description = $"Purchased {toy.Name} for ${trade.AmountPaid:F2}",
+            Description = $"Purchased {toy.Name} for ₱{trade.AmountPaid:F2}",
             AmountPaid = trade.AmountPaid,
             CreatedAt = DateTime.UtcNow
         };

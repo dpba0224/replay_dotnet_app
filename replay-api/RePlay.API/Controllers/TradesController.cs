@@ -141,7 +141,8 @@ public class TradesController : ControllerBase
         if (userId == Guid.Empty)
             return Unauthorized(new { message = "User not authenticated" });
 
-        var result = await _tradeService.CancelTradeAsync(id, userId);
+        var isAdmin = User.IsInRole("Admin");
+        var result = await _tradeService.CancelTradeAsync(id, userId, isAdmin);
 
         if (!result.Succeeded)
         {
