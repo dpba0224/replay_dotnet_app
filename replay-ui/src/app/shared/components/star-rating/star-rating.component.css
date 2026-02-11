@@ -1,0 +1,5 @@
+/* Optional: ensure touch targets are adequate on mobile */
+button {
+  min-width: 2rem;
+  min-height: 2rem;
+}

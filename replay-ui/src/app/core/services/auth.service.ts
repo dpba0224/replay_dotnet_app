@@ -26,6 +26,15 @@ export interface UserInfo {
   fullName: string;
   role: string;
   profileImageUrl?: string;
+  reputationScore?: number;
+  totalTradesCompleted?: number;
+  createdAt?: string;
+}
+
+export interface ProfileUpdateResult {
+  succeeded: boolean;
+  message: string | null;
+  user: UserInfo | null;
 }
 
 @Injectable({
@@ -81,6 +90,33 @@ export class AuthService {
     return this.http.post<{ message: string }>(`${this.apiUrl}/reset-password`, { token, newPassword });
   }
 
+  updateProfile(fullName: string): Observable<ProfileUpdateResult> {
+    return this.http.put<ProfileUpdateResult>(`${this.apiUrl}/profile`, { fullName }).pipe(
+      tap(result => {
+        if (result.succeeded && result.user) {
+          this.updateStoredUser(result.user);
+        }
+      })
+    );
+  }
+
+  uploadProfileImage(file: File): Observable<ProfileUpdateResult> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<ProfileUpdateResult>(`${this.apiUrl}/profile/image`, formData).pipe(
+      tap(result => {
+        if (result.succeeded && result.user) {
+          this.updateStoredUser(result.user);
+        }
+      })
+    );
+  }
+
+  getProfileImageUrl(path: string | null | undefined): string | null {
+    if (!path) return null;
+    return `${environment.apiUrl.replace('/api/v1', '')}/${path}`;
+  }
+
   logout(): void {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
@@ -103,5 +139,10 @@ export class AuthService {
     localStorage.setItem('user', JSON.stringify(response.user));
     this.currentUser.set(response.user);
     this.isAuthenticated.set(true);
+  }
+
+  private updateStoredUser(user: UserInfo): void {
+    localStorage.setItem('user', JSON.stringify(user));
+    this.currentUser.set(user);
   }
 }

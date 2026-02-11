@@ -47,6 +47,11 @@ export const routes: Routes = [
     loadComponent: () => import('./features/toys/my-toys/my-toys.component').then(m => m.MyToysComponent)
   },
   {
+    path: 'transactions',
+    canActivate: [authGuard],
+    loadComponent: () => import('./features/transactions/transaction-history/transaction-history').then(m => m.TransactionHistoryComponent)
+  },
+  {
     path: 'trades',
     canActivate: [authGuard],
     children: [
@@ -110,6 +115,10 @@ export const routes: Routes = [
       {
         path: 'trades',
         loadComponent: () => import('./features/admin/trade-monitor/trade-monitor.component').then(m => m.TradeMonitorComponent)
+      },
+      {
+        path: 'transactions',
+        loadComponent: () => import('./features/admin/transaction-log/transaction-log').then(m => m.TransactionLogComponent)
       }
     ]
   },

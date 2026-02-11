@@ -250,13 +250,13 @@ public class ReturnService : IReturnService
         var user = await _context.Users.FindAsync(userId);
         if (user == null) return;
 
-        // Get all ratings for this user including the new one
+        // Get all previously saved ratings for this user
         var allScores = await _context.Ratings
             .Where(r => r.RatedUserId == userId)
             .Select(r => r.Score)
             .ToListAsync();
 
-        // Add the new score (not yet saved)
+        // Include the new rating score (not yet saved to database)
         allScores.Add(newScore);
 
         user.ReputationScore = allScores.Count > 0

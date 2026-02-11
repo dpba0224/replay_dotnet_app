@@ -9,6 +9,8 @@ public interface IAuthService
     Task<AuthResult> ForgotPasswordAsync(string email);
     Task<AuthResult> ResetPasswordAsync(ResetPasswordDto dto);
     Task<UserDto?> GetCurrentUserAsync(Guid userId);
+    Task<ProfileUpdateResult> UpdateProfileAsync(Guid userId, UpdateProfileDto dto);
+    Task<ProfileUpdateResult> UpdateProfileImageAsync(Guid userId, Stream imageStream, string fileName, string contentType);
 }
 
 public class RegisterDto
@@ -57,4 +59,22 @@ public class UserDto
     public int TotalTradesCompleted { get; set; }
     public bool IsActive { get; set; }
     public DateTime CreatedAt { get; set; }
+}
+
+public class UpdateProfileDto
+{
+    public string FullName { get; set; } = string.Empty;
+}
+
+public class ProfileUpdateResult
+{
+    public bool Succeeded { get; set; }
+    public string? Message { get; set; }
+    public UserDto? User { get; set; }
+
+    public static ProfileUpdateResult Success(UserDto user, string? message = null)
+        => new() { Succeeded = true, User = user, Message = message };
+
+    public static ProfileUpdateResult Failure(string message)
+        => new() { Succeeded = false, Message = message };
 }

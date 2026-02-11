@@ -13,6 +13,7 @@ public class AuthService : IAuthService
     private readonly SignInManager<User> _signInManager;
     private readonly IJwtService _jwtService;
     private readonly IEmailService _emailService;
+    private readonly IFileUploadService _fileUploadService;
     private readonly IMemoryCache _cache;
     private readonly AppDbContext _context;
 
@@ -21,6 +22,7 @@ public class AuthService : IAuthService
         SignInManager<User> signInManager,
         IJwtService jwtService,
         IEmailService emailService,
+        IFileUploadService fileUploadService,
         IMemoryCache cache,
         AppDbContext context)
     {
@@ -28,6 +30,7 @@ public class AuthService : IAuthService
         _signInManager = signInManager;
         _jwtService = jwtService;
         _emailService = emailService;
+        _fileUploadService = fileUploadService;
         _cache = cache;
         _context = context;
     }
@@ -253,6 +256,54 @@ public class AuthService : IAuthService
 
         var roles = await _userManager.GetRolesAsync(user);
         return MapToUserDto(user, roles.FirstOrDefault() ?? "User");
+    }
+
+    public async Task<ProfileUpdateResult> UpdateProfileAsync(Guid userId, UpdateProfileDto dto)
+    {
+        var user = await _userManager.FindByIdAsync(userId.ToString());
+        if (user == null)
+            return ProfileUpdateResult.Failure("User not found.");
+
+        if (string.IsNullOrWhiteSpace(dto.FullName))
+            return ProfileUpdateResult.Failure("Full name is required.");
+
+        if (dto.FullName.Length > 100)
+            return ProfileUpdateResult.Failure("Full name must be 100 characters or less.");
+
+        user.FullName = dto.FullName.Trim();
+        user.UpdatedAt = DateTime.UtcNow;
+
+        var result = await _userManager.UpdateAsync(user);
+        if (!result.Succeeded)
+            return ProfileUpdateResult.Failure("Failed to update profile.");
+
+        var roles = await _userManager.GetRolesAsync(user);
+        return ProfileUpdateResult.Success(MapToUserDto(user, roles.FirstOrDefault() ?? "User"), "Profile updated successfully.");
+    }
+
+    public async Task<ProfileUpdateResult> UpdateProfileImageAsync(Guid userId, Stream imageStream, string fileName, string contentType)
+    {
+        var user = await _userManager.FindByIdAsync(userId.ToString());
+        if (user == null)
+            return ProfileUpdateResult.Failure("User not found.");
+
+        // Delete old profile image if exists
+        if (!string.IsNullOrEmpty(user.ProfileImageUrl))
+        {
+            await _fileUploadService.DeleteImageAsync(user.ProfileImageUrl);
+        }
+
+        var imagePath = await _fileUploadService.UploadImageAsync(imageStream, fileName, contentType);
+
+        user.ProfileImageUrl = imagePath;
+        user.UpdatedAt = DateTime.UtcNow;
+
+        var result = await _userManager.UpdateAsync(user);
+        if (!result.Succeeded)
+            return ProfileUpdateResult.Failure("Failed to update profile image.");
+
+        var roles = await _userManager.GetRolesAsync(user);
+        return ProfileUpdateResult.Success(MapToUserDto(user, roles.FirstOrDefault() ?? "User"), "Profile image updated successfully.");
     }
 
     private static string GenerateVerificationCode()

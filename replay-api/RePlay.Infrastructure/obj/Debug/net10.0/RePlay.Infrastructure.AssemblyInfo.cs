@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RePlay.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+10a43542779b499ab686d803e74bed92eda55d8e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7b198babc94a21c22c541eecab6a2e95d6cab8a6")]
 [assembly: System.Reflection.AssemblyProductAttribute("RePlay.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RePlay.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

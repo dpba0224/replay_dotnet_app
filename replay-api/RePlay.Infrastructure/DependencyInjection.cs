@@ -48,7 +48,9 @@ public static class DependencyInjection
         services.AddScoped<ITradeService, TradeService>();
         services.AddScoped<IPaymentService, PaymentService>();
         services.AddScoped<IReturnService, ReturnService>();
+        services.AddScoped<IRatingService, RatingService>();
         services.AddScoped<IMessageService, MessageService>();
+        services.AddScoped<IAdminService, AdminService>();
 
         // Memory Cache for tokens
         services.AddMemoryCache();

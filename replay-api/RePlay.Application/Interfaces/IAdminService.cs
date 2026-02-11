@@ -7,6 +7,7 @@ public interface IAdminService
     Task<bool> ActivateUserAsync(Guid userId);
     Task<bool> DeactivateUserAsync(Guid userId);
     Task<PagedResult<TransactionDto>> GetTransactionsAsync(TransactionQueryParameters parameters);
+    Task<PagedResult<TransactionDto>> GetUserTransactionsAsync(Guid userId, TransactionQueryParameters parameters);
 }
 
 public class DashboardStatsDto

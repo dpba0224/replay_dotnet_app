@@ -18,7 +18,10 @@
       "Bash(npm run dev:*)",
       "Bash(npm start)",
       "Bash(npx ng build)",
-      "Bash(xargs:*)"
+      "Bash(xargs:*)",
+      "Bash(grep:*)",
+      "Bash(npx ng generate:*)",
+      "Bash(npx ng build:*)"
     ]
   }
 }

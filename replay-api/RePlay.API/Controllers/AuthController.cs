@@ -199,6 +199,70 @@ public class AuthController : ControllerBase
 
         return Ok(user);
     }
+
+    /// <summary>
+    /// Update current user's profile (name)
+    /// </summary>
+    [HttpPut("profile")]
+    [Authorize]
+    [ProducesResponseType(typeof(ProfileUpdateResult), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileRequest request)
+    {
+        var userId = GetCurrentUserId();
+        if (userId == Guid.Empty)
+            return Unauthorized();
+
+        var result = await _authService.UpdateProfileAsync(userId, new UpdateProfileDto
+        {
+            FullName = request.FullName
+        });
+
+        if (!result.Succeeded)
+            return BadRequest(new { message = result.Message });
+
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Upload or update current user's profile image
+    /// </summary>
+    [HttpPost("profile/image")]
+    [Authorize]
+    [ProducesResponseType(typeof(ProfileUpdateResult), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> UpdateProfileImage(IFormFile file)
+    {
+        var userId = GetCurrentUserId();
+        if (userId == Guid.Empty)
+            return Unauthorized();
+
+        if (file == null || file.Length == 0)
+            return BadRequest(new { message = "No file provided." });
+
+        try
+        {
+            await using var stream = file.OpenReadStream();
+            var result = await _authService.UpdateProfileImageAsync(userId, stream, file.FileName, file.ContentType);
+
+            if (!result.Succeeded)
+                return BadRequest(new { message = result.Message });
+
+            return Ok(result);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+    }
+
+    private Guid GetCurrentUserId()
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        return Guid.TryParse(userIdClaim, out var userId) ? userId : Guid.Empty;
+    }
 }
 
 // Request DTOs
@@ -244,6 +308,11 @@ public class AuthResponse
     public string? AccessToken { get; set; }
     public string? RefreshToken { get; set; }
     public UserDto? User { get; set; }
+}
+
+public class UpdateProfileRequest
+{
+    public string FullName { get; set; } = string.Empty;
 }
 
 public class ErrorResponse

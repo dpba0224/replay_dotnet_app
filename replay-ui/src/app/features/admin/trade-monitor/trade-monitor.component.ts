@@ -6,11 +6,12 @@ import { ReturnService, ReturnDto, ReturnQueryParams, ApproveReturnDto } from '.
 import { ToyService } from '../../../core/services/toy.service';
 import { PagedResult } from '../../../core/services/toy.service';
 import { ToyConditions } from '../../../core/services/toy.service';
+import { StarRatingComponent } from '../../../shared/components/star-rating/star-rating.component';
 
 @Component({
   selector: 'app-trade-monitor',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, StarRatingComponent],
   templateUrl: './trade-monitor.component.html',
   styleUrl: './trade-monitor.component.css'
 })
