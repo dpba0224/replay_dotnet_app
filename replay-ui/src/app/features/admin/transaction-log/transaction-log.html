@@ -1,4 +1,5 @@
-<div class="container mx-auto px-4 py-8">
+<div class="bg-gray-50 min-h-screen py-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
   <h1 class="text-3xl font-bold mb-2">Transaction Log</h1>
   <p class="text-gray-600 mb-6">View all platform transactions with filters.</p>
 
@@ -117,7 +118,7 @@
                   </span>
                 </td>
                 <td class="px-6 py-4">
-                  <div class="text-sm text-gray-600 max-w-[250px] truncate">{{ txn.description }}</div>
+                  <div class="text-sm text-gray-600 max-w-[150px] sm:max-w-[250px] truncate">{{ txn.description }}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   @if (txn.amountPaid) {
@@ -159,4 +160,5 @@
       }
     }
   }
+</div>
 </div>

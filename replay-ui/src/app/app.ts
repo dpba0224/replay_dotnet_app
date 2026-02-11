@@ -14,6 +14,7 @@ import { MessageService } from './core/services/message.service';
 })
 export class App implements OnInit, OnDestroy {
   unreadCount = signal(0);
+  mobileMenuOpen = signal(false);
   private pollInterval: any;
   private routerSub?: Subscription;
 
@@ -28,6 +29,7 @@ export class App implements OnInit, OnDestroy {
     this.routerSub = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
+      this.mobileMenuOpen.set(false);
       if (this.authService.isAuthenticated()) {
         this.loadUnreadCount();
       }

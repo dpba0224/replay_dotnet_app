@@ -1,4 +1,5 @@
-<div class="container mx-auto px-4 py-8">
+<div class="bg-gray-50 min-h-screen py-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
   <div class="flex items-center justify-between mb-6">
     <h1 class="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
     <button
@@ -26,11 +27,11 @@
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       <!-- Total Users -->
-      <div class="bg-white shadow rounded-lg p-6">
+      <div class="bg-white shadow rounded-lg p-4 sm:p-6">
         <div class="flex items-center justify-between">
           <div>
             <p class="text-sm font-medium text-gray-500">Total Users</p>
-            <p class="text-3xl font-bold text-indigo-600">{{ stats()!.totalUsers }}</p>
+            <p class="text-2xl sm:text-3xl font-bold text-indigo-600">{{ stats()!.totalUsers }}</p>
           </div>
           <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center">
             <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -42,11 +43,11 @@
       </div>
 
       <!-- Total Toys -->
-      <div class="bg-white shadow rounded-lg p-6">
+      <div class="bg-white shadow rounded-lg p-4 sm:p-6">
         <div class="flex items-center justify-between">
           <div>
             <p class="text-sm font-medium text-gray-500">Total Toys</p>
-            <p class="text-3xl font-bold text-green-600">{{ stats()!.totalToys }}</p>
+            <p class="text-2xl sm:text-3xl font-bold text-green-600">{{ stats()!.totalToys }}</p>
           </div>
           <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
             <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -58,11 +59,11 @@
       </div>
 
       <!-- Pending Trades -->
-      <div class="bg-white shadow rounded-lg p-6">
+      <div class="bg-white shadow rounded-lg p-4 sm:p-6">
         <div class="flex items-center justify-between">
           <div>
             <p class="text-sm font-medium text-gray-500">Pending Trades</p>
-            <p class="text-3xl font-bold text-yellow-600">{{ stats()!.pendingTrades }}</p>
+            <p class="text-2xl sm:text-3xl font-bold text-yellow-600">{{ stats()!.pendingTrades }}</p>
           </div>
           <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
             <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -74,11 +75,11 @@
       </div>
 
       <!-- Total Revenue -->
-      <div class="bg-white shadow rounded-lg p-6">
+      <div class="bg-white shadow rounded-lg p-4 sm:p-6">
         <div class="flex items-center justify-between">
           <div>
             <p class="text-sm font-medium text-gray-500">Total Revenue</p>
-            <p class="text-3xl font-bold text-blue-600">&#8369;{{ stats()!.totalRevenue.toFixed(2) }}</p>
+            <p class="text-2xl sm:text-3xl font-bold text-blue-600">&#8369;{{ stats()!.totalRevenue.toFixed(2) }}</p>
           </div>
           <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
             <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -118,7 +119,7 @@
       } @else {
         <ul class="divide-y divide-gray-200">
           @for (activity of stats()!.recentActivities; track $index) {
-            <li class="px-6 py-4 flex items-center gap-4">
+            <li class="px-4 sm:px-6 py-4 flex items-center gap-3 sm:gap-4">
               <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
                 [class]="adminService.getActivityTypeBadgeClass(activity.type)">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -141,4 +142,5 @@
       }
     </div>
   }
+</div>
 </div>

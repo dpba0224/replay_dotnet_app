@@ -10,11 +10,13 @@ public class MessageService : IMessageService
 {
     private readonly AppDbContext _context;
     private readonly ILogger<MessageService> _logger;
+    private readonly IEmailService _emailService;
 
-    public MessageService(AppDbContext context, ILogger<MessageService> logger)
+    public MessageService(AppDbContext context, ILogger<MessageService> logger, IEmailService emailService)
     {
         _context = context;
         _logger = logger;
+        _emailService = emailService;
     }
 
     public async Task<MessageDto> SendMessageAsync(SendMessageDto dto, Guid senderId)
@@ -58,6 +60,9 @@ public class MessageService : IMessageService
         _logger.LogInformation(
             "Message sent from {SenderId} to {ReceiverId} (MessageId: {MessageId})",
             senderId, dto.ReceiverId, message.Id);
+
+        // Send email notification to receiver
+        await _emailService.SendNewMessageNotificationAsync(receiver.Email!, receiver.FullName, sender?.FullName ?? "Someone");
 
         return new MessageDto
         {

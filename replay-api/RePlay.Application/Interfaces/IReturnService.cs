@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using RePlay.Domain.Enums;
 
 namespace RePlay.Application.Interfaces;
@@ -13,15 +14,24 @@ public interface IReturnService
 
 public class CreateReturnDto
 {
+    [Required]
     public Guid ToyId { get; set; }
+
+    [StringLength(500)]
     public string? UserNotes { get; set; }
 }
 
 public class ApproveReturnDto
 {
     public ToyCondition ConditionOnReturn { get; set; }
+
+    [StringLength(500)]
     public string? AdminNotes { get; set; }
+
+    [Range(1, 5)]
     public int? UserRating { get; set; }
+
+    [StringLength(500)]
     public string? RatingComment { get; set; }
 }
 
@@ -30,7 +40,11 @@ public class ReturnQueryParameters
     public ReturnStatus? Status { get; set; }
     public DateTime? FromDate { get; set; }
     public DateTime? ToDate { get; set; }
+
+    [Range(1, int.MaxValue)]
     public int PageNumber { get; set; } = 1;
+
+    [Range(1, 100)]
     public int PageSize { get; set; } = 20;
 }
 

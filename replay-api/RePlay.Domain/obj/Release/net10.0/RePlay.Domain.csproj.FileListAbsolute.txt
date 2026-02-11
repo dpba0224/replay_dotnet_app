@@ -1,0 +1,13 @@
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/bin/Release/net10.0/RePlay.Domain.deps.json
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/bin/Release/net10.0/RePlay.Domain.dll
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/bin/Release/net10.0/RePlay.Domain.pdb
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/obj/Release/net10.0/RePlay.Domain.csproj.AssemblyReference.cache
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/obj/Release/net10.0/RePlay.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/obj/Release/net10.0/RePlay.Domain.AssemblyInfoInputs.cache
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/obj/Release/net10.0/RePlay.Domain.AssemblyInfo.cs
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/obj/Release/net10.0/RePlay.Domain.csproj.CoreCompileInputs.cache
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/obj/Release/net10.0/RePlay.Domain.sourcelink.json
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/obj/Release/net10.0/RePlay.Domain.dll
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/obj/Release/net10.0/refint/RePlay.Domain.dll
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/obj/Release/net10.0/RePlay.Domain.pdb
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Domain/obj/Release/net10.0/ref/RePlay.Domain.dll

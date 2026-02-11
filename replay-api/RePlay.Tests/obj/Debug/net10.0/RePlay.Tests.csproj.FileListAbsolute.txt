@@ -123,3 +123,6 @@
 /Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Tests/bin/Debug/net10.0/System.Configuration.ConfigurationManager.dll
 /Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Tests/bin/Debug/net10.0/System.Security.Cryptography.ProtectedData.dll
 /Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Tests/bin/Debug/net10.0/runtimes/win/lib/net9.0/System.Diagnostics.EventLog.Messages.dll
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Tests/bin/Debug/net10.0/BouncyCastle.Cryptography.dll
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Tests/bin/Debug/net10.0/MailKit.dll
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Tests/bin/Debug/net10.0/MimeKit.dll

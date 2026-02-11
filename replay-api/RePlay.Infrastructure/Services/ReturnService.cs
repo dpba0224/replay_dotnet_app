@@ -11,11 +11,13 @@ public class ReturnService : IReturnService
 {
     private readonly AppDbContext _context;
     private readonly ILogger<ReturnService> _logger;
+    private readonly IEmailService _emailService;
 
-    public ReturnService(AppDbContext context, ILogger<ReturnService> logger)
+    public ReturnService(AppDbContext context, ILogger<ReturnService> logger, IEmailService emailService)
     {
         _context = context;
         _logger = logger;
+        _emailService = emailService;
     }
 
     public async Task<ReturnResult> InitiateReturnAsync(CreateReturnDto dto, Guid userId)
@@ -186,6 +188,13 @@ public class ReturnService : IReturnService
             "Return {ReturnId} approved by admin {AdminId}. Toy {ToyId} back to Available with condition {Condition}.",
             returnId, adminId, toyReturn.ToyId, dto.ConditionOnReturn);
 
+        // Send email notification to user
+        var returnUser = await _context.Users.FindAsync(toyReturn.ReturnedByUserId);
+        if (returnUser != null)
+        {
+            await _emailService.SendReturnApprovedAsync(returnUser.Email!, returnUser.FullName, toy?.Name ?? "toy");
+        }
+
         // Reload for response
         var approvedReturn = await GetReturnEntityAsync(returnId);
         return ReturnResult.Success(MapToDto(approvedReturn!), "Return approved successfully.");
@@ -240,6 +249,13 @@ public class ReturnService : IReturnService
         _logger.LogInformation(
             "Return {ReturnId} rejected by admin {AdminId}. Toy {ToyId} remains with user.",
             returnId, adminId, toyReturn.ToyId);
+
+        // Send email notification to user
+        var rejectUser = await _context.Users.FindAsync(toyReturn.ReturnedByUserId);
+        if (rejectUser != null)
+        {
+            await _emailService.SendReturnRejectedAsync(rejectUser.Email!, rejectUser.FullName, toy?.Name ?? "toy", adminNotes);
+        }
 
         var rejectedReturn = await GetReturnEntityAsync(returnId);
         return ReturnResult.Success(MapToDto(rejectedReturn!), "Return rejected.");

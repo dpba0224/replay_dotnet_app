@@ -3,6 +3,7 @@
 **/.vs/
 **/.vscode/
 **/node_modules/
+RePlay.Tests/
 *.user
 *.suo
 .git/

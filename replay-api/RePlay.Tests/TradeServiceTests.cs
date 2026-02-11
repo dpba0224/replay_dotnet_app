@@ -9,11 +9,12 @@ namespace RePlay.Tests;
 public class TradeServiceTests
 {
     private readonly Mock<ILogger<TradeService>> _loggerMock = new();
+    private readonly Mock<IEmailService> _emailMock = new();
 
     private TradeService CreateService(string dbName)
     {
         var context = TestDbHelper.CreateContext(dbName);
-        return new TradeService(context, _loggerMock.Object);
+        return new TradeService(context, _loggerMock.Object, _emailMock.Object);
     }
 
     // --- CreateTradeAsync (Purchase) ---
@@ -31,7 +32,7 @@ public class TradeServiceTests
         context.Toys.Add(toy);
         await context.SaveChangesAsync();
 
-        var service = new TradeService(context, _loggerMock.Object);
+        var service = new TradeService(context, _loggerMock.Object, _emailMock.Object);
         var dto = new CreateTradeDto
         {
             RequestedToyId = toy.Id,
@@ -61,7 +62,7 @@ public class TradeServiceTests
         context.Toys.AddRange(toy, offeredToy);
         await context.SaveChangesAsync();
 
-        var service = new TradeService(context, _loggerMock.Object);
+        var service = new TradeService(context, _loggerMock.Object, _emailMock.Object);
         var dto = new CreateTradeDto
         {
             RequestedToyId = toy.Id,
@@ -91,7 +92,7 @@ public class TradeServiceTests
         context.Toys.AddRange(requestedToy, offeredToy);
         await context.SaveChangesAsync();
 
-        var service = new TradeService(context, _loggerMock.Object);
+        var service = new TradeService(context, _loggerMock.Object, _emailMock.Object);
         var dto = new CreateTradeDto
         {
             RequestedToyId = requestedToy.Id,
@@ -120,7 +121,7 @@ public class TradeServiceTests
         context.Toys.Add(toy);
         await context.SaveChangesAsync();
 
-        var service = new TradeService(context, _loggerMock.Object);
+        var service = new TradeService(context, _loggerMock.Object, _emailMock.Object);
         var dto = new CreateTradeDto
         {
             RequestedToyId = toy.Id,
@@ -148,7 +149,7 @@ public class TradeServiceTests
         context.Toys.AddRange(requestedToy, offeredToy);
         await context.SaveChangesAsync();
 
-        var service = new TradeService(context, _loggerMock.Object);
+        var service = new TradeService(context, _loggerMock.Object, _emailMock.Object);
         var dto = new CreateTradeDto
         {
             RequestedToyId = requestedToy.Id,
@@ -173,7 +174,7 @@ public class TradeServiceTests
         context.Users.Add(user);
         await context.SaveChangesAsync();
 
-        var service = new TradeService(context, _loggerMock.Object);
+        var service = new TradeService(context, _loggerMock.Object, _emailMock.Object);
         var dto = new CreateTradeDto
         {
             RequestedToyId = Guid.NewGuid(),
@@ -200,7 +201,7 @@ public class TradeServiceTests
         context.Toys.Add(toy);
         await context.SaveChangesAsync();
 
-        var service = new TradeService(context, _loggerMock.Object);
+        var service = new TradeService(context, _loggerMock.Object, _emailMock.Object);
         var dto = new CreateTradeDto
         {
             RequestedToyId = toy.Id,
@@ -226,7 +227,7 @@ public class TradeServiceTests
         context.Toys.Add(toy);
         await context.SaveChangesAsync();
 
-        var service = new TradeService(context, _loggerMock.Object);
+        var service = new TradeService(context, _loggerMock.Object, _emailMock.Object);
         var dto = new CreateTradeDto
         {
             RequestedToyId = toy.Id,
@@ -252,7 +253,7 @@ public class TradeServiceTests
         context.Toys.Add(toy);
         await context.SaveChangesAsync();
 
-        var service = new TradeService(context, _loggerMock.Object);
+        var service = new TradeService(context, _loggerMock.Object, _emailMock.Object);
         var dto = new CreateTradeDto
         {
             RequestedToyId = toy.Id,
@@ -278,7 +279,7 @@ public class TradeServiceTests
         context.Toys.Add(toy);
         await context.SaveChangesAsync();
 
-        var service = new TradeService(context, _loggerMock.Object);
+        var service = new TradeService(context, _loggerMock.Object, _emailMock.Object);
         var dto = new CreateTradeDto
         {
             RequestedToyId = toy.Id,
@@ -310,7 +311,7 @@ public class TradeServiceTests
         context.Toys.Add(toy);
         await context.SaveChangesAsync();
 
-        var service = new TradeService(context, _loggerMock.Object);
+        var service = new TradeService(context, _loggerMock.Object, _emailMock.Object);
 
         // Create the trade first
         var createResult = await service.CreateTradeAsync(
@@ -351,7 +352,7 @@ public class TradeServiceTests
         context.Toys.AddRange(requestedToy, offeredToy);
         await context.SaveChangesAsync();
 
-        var service = new TradeService(context, _loggerMock.Object);
+        var service = new TradeService(context, _loggerMock.Object, _emailMock.Object);
 
         var createResult = await service.CreateTradeAsync(
             new CreateTradeDto
@@ -389,7 +390,7 @@ public class TradeServiceTests
         context.Toys.Add(toy);
         await context.SaveChangesAsync();
 
-        var service = new TradeService(context, _loggerMock.Object);
+        var service = new TradeService(context, _loggerMock.Object, _emailMock.Object);
 
         var createResult = await service.CreateTradeAsync(
             new CreateTradeDto { RequestedToyId = toy.Id, TradeType = TradeType.Purchase },
@@ -410,7 +411,7 @@ public class TradeServiceTests
     {
         var dbName = nameof(ApproveTrade_NonexistentTrade_Fails);
         var context = TestDbHelper.CreateContext(dbName);
-        var service = new TradeService(context, _loggerMock.Object);
+        var service = new TradeService(context, _loggerMock.Object, _emailMock.Object);
 
         var result = await service.ApproveTradeAsync(Guid.NewGuid(), Guid.NewGuid());
 
@@ -433,7 +434,7 @@ public class TradeServiceTests
         context.Toys.Add(toy);
         await context.SaveChangesAsync();
 
-        var service = new TradeService(context, _loggerMock.Object);
+        var service = new TradeService(context, _loggerMock.Object, _emailMock.Object);
 
         var createResult = await service.CreateTradeAsync(
             new CreateTradeDto { RequestedToyId = toy.Id, TradeType = TradeType.Purchase },
@@ -459,7 +460,7 @@ public class TradeServiceTests
         context.Toys.Add(toy);
         await context.SaveChangesAsync();
 
-        var service = new TradeService(context, _loggerMock.Object);
+        var service = new TradeService(context, _loggerMock.Object, _emailMock.Object);
 
         var createResult = await service.CreateTradeAsync(
             new CreateTradeDto { RequestedToyId = toy.Id, TradeType = TradeType.Purchase },
@@ -484,7 +485,7 @@ public class TradeServiceTests
         context.Users.AddRange(admin, user);
         await context.SaveChangesAsync();
 
-        var service = new TradeService(context, _loggerMock.Object);
+        var service = new TradeService(context, _loggerMock.Object, _emailMock.Object);
 
         // Create 3 trades
         for (int i = 0; i < 3; i++)
@@ -517,7 +518,7 @@ public class TradeServiceTests
         context.Users.AddRange(admin, user);
         await context.SaveChangesAsync();
 
-        var service = new TradeService(context, _loggerMock.Object);
+        var service = new TradeService(context, _loggerMock.Object, _emailMock.Object);
 
         // Create 2 trades, cancel one
         var toy1 = TestDbHelper.CreateToy(admin.Id, "Toy 1");

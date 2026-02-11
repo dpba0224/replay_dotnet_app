@@ -1,0 +1,16 @@
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Application/bin/Release/net10.0/RePlay.Application.deps.json
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Application/bin/Release/net10.0/RePlay.Application.dll
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Application/bin/Release/net10.0/RePlay.Application.pdb
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Application/bin/Release/net10.0/RePlay.Domain.dll
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Application/bin/Release/net10.0/RePlay.Domain.pdb
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Application/obj/Release/net10.0/RePlay.Application.csproj.AssemblyReference.cache
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Application/obj/Release/net10.0/RePlay.Application.GeneratedMSBuildEditorConfig.editorconfig
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Application/obj/Release/net10.0/RePlay.Application.AssemblyInfoInputs.cache
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Application/obj/Release/net10.0/RePlay.Application.AssemblyInfo.cs
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Application/obj/Release/net10.0/RePlay.Application.csproj.CoreCompileInputs.cache
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Application/obj/Release/net10.0/RePlay.Application.sourcelink.json
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Application/obj/Release/net10.0/RePlay.A.0A0C9693.Up2Date
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Application/obj/Release/net10.0/RePlay.Application.dll
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Application/obj/Release/net10.0/refint/RePlay.Application.dll
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Application/obj/Release/net10.0/RePlay.Application.pdb
+/Users/davidpoloabrugena/Desktop/David Polo Abrugena/RePlay_DotNet/replay_dotnet_app/replay-api/RePlay.Application/obj/Release/net10.0/ref/RePlay.Application.dll

@@ -11,11 +11,13 @@ public class TradeService : ITradeService
 {
     private readonly AppDbContext _context;
     private readonly ILogger<TradeService> _logger;
+    private readonly IEmailService _emailService;
 
-    public TradeService(AppDbContext context, ILogger<TradeService> logger)
+    public TradeService(AppDbContext context, ILogger<TradeService> logger, IEmailService emailService)
     {
         _context = context;
         _logger = logger;
+        _emailService = emailService;
     }
 
     public async Task<TradeResult> CreateTradeAsync(CreateTradeDto dto, Guid userId)
@@ -254,6 +256,12 @@ public class TradeService : ITradeService
         _logger.LogInformation(
             "Trade {TradeId} approved by admin {AdminId}. Toy {ToyId} assigned to user {UserId}.",
             tradeId, adminId, trade.RequestedToyId, trade.UserId);
+
+        // Send email notification to user
+        if (user != null)
+        {
+            await _emailService.SendTradeApprovedAsync(user.Email!, user.FullName, requestedToy.Name);
+        }
 
         // Reload for response
         var approvedTrade = await GetTradeEntityAsync(tradeId);

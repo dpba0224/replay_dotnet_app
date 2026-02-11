@@ -1,12 +1,15 @@
+using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using RePlay.Application.Interfaces;
 
 namespace RePlay.API.Controllers;
 
 [ApiController]
 [Route("api/v1/auth")]
+[EnableRateLimiting("auth")]
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
@@ -181,6 +184,7 @@ public class AuthController : ControllerBase
     /// </summary>
     [HttpGet("me")]
     [Authorize]
+    [DisableRateLimiting]
     [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> GetCurrentUser()
@@ -205,6 +209,7 @@ public class AuthController : ControllerBase
     /// </summary>
     [HttpPut("profile")]
     [Authorize]
+    [DisableRateLimiting]
     [ProducesResponseType(typeof(ProfileUpdateResult), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -230,6 +235,7 @@ public class AuthController : ControllerBase
     /// </summary>
     [HttpPost("profile/image")]
     [Authorize]
+    [DisableRateLimiting]
     [ProducesResponseType(typeof(ProfileUpdateResult), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -268,36 +274,60 @@ public class AuthController : ControllerBase
 // Request DTOs
 public class RegisterRequest
 {
+    [Required]
+    [EmailAddress]
+    [StringLength(256)]
     public string Email { get; set; } = string.Empty;
+
+    [Required]
+    [StringLength(128, MinimumLength = 8)]
     public string Password { get; set; } = string.Empty;
+
+    [Required]
+    [StringLength(100, MinimumLength = 2)]
     public string FullName { get; set; } = string.Empty;
 }
 
 public class LoginRequest
 {
+    [Required]
+    [EmailAddress]
     public string Email { get; set; } = string.Empty;
+
+    [Required]
     public string Password { get; set; } = string.Empty;
 }
 
 public class VerifyEmailRequest
 {
+    [Required]
+    [EmailAddress]
     public string Email { get; set; } = string.Empty;
+
+    [Required]
     public string Code { get; set; } = string.Empty;
 }
 
 public class RefreshTokenRequest
 {
+    [Required]
     public string RefreshToken { get; set; } = string.Empty;
 }
 
 public class ForgotPasswordRequest
 {
+    [Required]
+    [EmailAddress]
     public string Email { get; set; } = string.Empty;
 }
 
 public class ResetPasswordRequest
 {
+    [Required]
     public string Token { get; set; } = string.Empty;
+
+    [Required]
+    [StringLength(128, MinimumLength = 8)]
     public string NewPassword { get; set; } = string.Empty;
 }
 
@@ -312,6 +342,8 @@ public class AuthResponse
 
 public class UpdateProfileRequest
 {
+    [Required]
+    [StringLength(100, MinimumLength = 2)]
     public string FullName { get; set; } = string.Empty;
 }
 

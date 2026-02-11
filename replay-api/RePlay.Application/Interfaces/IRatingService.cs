@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace RePlay.Application.Interfaces;
 
 public interface IRatingService
@@ -9,9 +11,17 @@ public interface IRatingService
 
 public class CreateRatingDto
 {
+    [Required]
     public Guid RatedUserId { get; set; }
+
+    [Required]
     public Guid ToyReturnId { get; set; }
+
+    [Required]
+    [Range(1, 5)]
     public int Score { get; set; }
+
+    [StringLength(500)]
     public string? Comment { get; set; }
 }
 

@@ -1,23 +1,22 @@
-version: '3.8'
-
 services:
   # PostgreSQL Database
   replay-db:
     image: postgres:16-alpine
     container_name: replay-db
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: replay_db
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-replay_db}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
       interval: 10s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
 
   # ASP.NET Core Backend API
   replay-backend:
@@ -26,18 +25,31 @@ services:
       dockerfile: Dockerfile
     container_name: replay-backend
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT:-Development}
       - ASPNETCORE_URLS=http://+:5000
-      - ConnectionStrings__DefaultConnection=Host=replay-db;Port=5432;Database=replay_db;Username=postgres;Password=postgres
+      - ConnectionStrings__DefaultConnection=Host=replay-db;Port=5432;Database=${POSTGRES_DB:-replay_db};Username=${POSTGRES_USER:-postgres};Password=${POSTGRES_PASSWORD:-postgres}
+      - JwtSettings__SecretKey=${JWT_SECRET_KEY:-YourSuperSecretKeyThatIsAtLeast32CharactersLong!}
+      - JwtSettings__Issuer=${JWT_ISSUER:-RePlayAPI}
+      - JwtSettings__Audience=${JWT_AUDIENCE:-RePlayClient}
+      - EmailSettings__SmtpHost=${SMTP_HOST:-}
+      - EmailSettings__SmtpPort=${SMTP_PORT:-587}
+      - EmailSettings__SmtpUsername=${SMTP_USERNAME:-}
+      - EmailSettings__SmtpPassword=${SMTP_PASSWORD:-}
+      - EmailSettings__FromEmail=${EMAIL_FROM:-noreply@replay.com}
+      - EmailSettings__FromName=${EMAIL_FROM_NAME:-RePlay}
+      - StripeSettings__SecretKey=${STRIPE_SECRET_KEY:-}
+      - StripeSettings__PublishableKey=${STRIPE_PUBLISHABLE_KEY:-}
+      - StripeSettings__WebhookSecret=${STRIPE_WEBHOOK_SECRET:-}
     ports:
       - "5000:5000"
     depends_on:
       replay-db:
         condition: service_healthy
     volumes:
-      - ./uploads:/app/uploads
+      - uploads_data:/app/uploads
+    restart: unless-stopped
 
-  # Angular Frontend (served via Nginx in production)
+  # Angular Frontend (served via Nginx)
   replay-frontend:
     build:
       context: ./replay-ui
@@ -47,14 +59,15 @@ services:
       - "4200:80"
     depends_on:
       - replay-backend
+    restart: unless-stopped
 
   # pgAdmin for database management (optional, for development)
   replay-pgadmin:
     image: dpage/pgadmin4:latest
     container_name: replay-pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@replay.com
-      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@replay.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
     ports:
       - "5050:80"
     depends_on:
@@ -64,3 +77,4 @@ services:
 
 volumes:
   postgres_data:
+  uploads_data:

@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace RePlay.Application.Interfaces;
 
 public interface IMessageService
@@ -11,8 +13,12 @@ public interface IMessageService
 
 public class SendMessageDto
 {
+    [Required]
     public Guid ReceiverId { get; set; }
     public Guid? TradeId { get; set; }
+
+    [Required]
+    [StringLength(2000, MinimumLength = 1)]
     public string Content { get; set; } = string.Empty;
 }
 

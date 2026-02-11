@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using RePlay.Domain.Enums;
 
 namespace RePlay.Application.Interfaces;
@@ -14,9 +15,12 @@ public interface ITradeService
 
 public class CreateTradeDto
 {
+    [Required]
     public Guid RequestedToyId { get; set; }
     public Guid? OfferedToyId { get; set; }
     public TradeType TradeType { get; set; }
+
+    [StringLength(500)]
     public string? Notes { get; set; }
 }
 
@@ -26,7 +30,11 @@ public class TradeQueryParameters
     public TradeType? Type { get; set; }
     public DateTime? FromDate { get; set; }
     public DateTime? ToDate { get; set; }
+
+    [Range(1, int.MaxValue)]
     public int PageNumber { get; set; } = 1;
+
+    [Range(1, 100)]
     public int PageSize { get; set; } = 20;
 }
 

@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using RePlay.Domain.Entities;
 using RePlay.Domain.Enums;
 
@@ -27,7 +28,11 @@ public class ToyQueryParameters
     public decimal? MinPrice { get; set; }
     public decimal? MaxPrice { get; set; }
     public string SortBy { get; set; } = "newest";
+
+    [Range(1, int.MaxValue)]
     public int PageNumber { get; set; } = 1;
+
+    [Range(1, 100)]
     public int PageSize { get; set; } = 20;
     public bool IncludeArchived { get; set; } = false;
 }
@@ -58,21 +63,42 @@ public class ToyImageDto
 
 public class CreateToyDto
 {
+    [Required]
+    [StringLength(200, MinimumLength = 2)]
     public string Name { get; set; } = string.Empty;
+
+    [Required]
+    [StringLength(2000, MinimumLength = 10)]
     public string Description { get; set; } = string.Empty;
+
     public ToyCategory Category { get; set; }
+
+    [Required]
+    [StringLength(20)]
     public string AgeGroup { get; set; } = string.Empty;
+
     public ToyCondition Condition { get; set; }
+
+    [Range(0.01, 99999.99)]
     public decimal Price { get; set; }
 }
 
 public class UpdateToyDto
 {
+    [StringLength(200, MinimumLength = 2)]
     public string? Name { get; set; }
+
+    [StringLength(2000, MinimumLength = 10)]
     public string? Description { get; set; }
+
     public ToyCategory? Category { get; set; }
+
+    [StringLength(20)]
     public string? AgeGroup { get; set; }
+
     public ToyCondition? Condition { get; set; }
+
+    [Range(0.01, 99999.99)]
     public decimal? Price { get; set; }
 }
 

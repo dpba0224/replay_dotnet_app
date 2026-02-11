@@ -10,10 +10,10 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <!-- Tabs -->
     <div class="border-b border-gray-200 mb-6">
-      <nav class="flex space-x-8">
+      <nav class="flex space-x-4 sm:space-x-8 overflow-x-auto">
         <button
           (click)="switchTab('held')"
-          class="py-4 px-1 border-b-2 font-medium text-sm"
+          class="py-4 px-1 border-b-2 font-medium text-sm whitespace-nowrap"
           [class]="activeTab() === 'held' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
         >
           Toys I Hold
@@ -25,7 +25,7 @@
         </button>
         <button
           (click)="switchTab('returns')"
-          class="py-4 px-1 border-b-2 font-medium text-sm"
+          class="py-4 px-1 border-b-2 font-medium text-sm whitespace-nowrap"
           [class]="activeTab() === 'returns' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
         >
           Return Requests
@@ -216,7 +216,7 @@
 @if (showReturnModal() && selectedToy()) {
   <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
     <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
-      <div class="p-6">
+      <div class="p-4 sm:p-6">
         <h2 class="text-xl font-bold text-gray-900 mb-4">Return Toy</h2>
 
         <!-- Success message -->

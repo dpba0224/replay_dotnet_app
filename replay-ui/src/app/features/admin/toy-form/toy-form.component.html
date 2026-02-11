@@ -150,7 +150,7 @@
 
             <!-- Current Images -->
             @if (toy()!.images.length > 0) {
-              <div class="grid grid-cols-4 gap-4 mb-4">
+              <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-4 mb-4">
                 @for (image of toy()!.images; track image.id) {
                   <div class="relative group">
                     <img

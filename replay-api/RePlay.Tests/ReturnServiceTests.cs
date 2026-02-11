@@ -9,6 +9,7 @@ namespace RePlay.Tests;
 public class ReturnServiceTests
 {
     private readonly Mock<ILogger<ReturnService>> _loggerMock = new();
+    private readonly Mock<IEmailService> _emailMock = new();
 
     // --- InitiateReturnAsync ---
 
@@ -25,7 +26,7 @@ public class ReturnServiceTests
         context.Toys.Add(toy);
         await context.SaveChangesAsync();
 
-        var service = new ReturnService(context, _loggerMock.Object);
+        var service = new ReturnService(context, _loggerMock.Object, _emailMock.Object);
         var dto = new CreateReturnDto { ToyId = toy.Id, UserNotes = "Returning this toy" };
 
         var result = await service.InitiateReturnAsync(dto, user.Id);
@@ -53,7 +54,7 @@ public class ReturnServiceTests
         context.Toys.Add(toy);
         await context.SaveChangesAsync();
 
-        var service = new ReturnService(context, _loggerMock.Object);
+        var service = new ReturnService(context, _loggerMock.Object, _emailMock.Object);
         var result = await service.InitiateReturnAsync(new CreateReturnDto { ToyId = toy.Id }, user.Id);
 
         Assert.True(result.Succeeded);
@@ -68,7 +69,7 @@ public class ReturnServiceTests
         context.Users.Add(user);
         await context.SaveChangesAsync();
 
-        var service = new ReturnService(context, _loggerMock.Object);
+        var service = new ReturnService(context, _loggerMock.Object, _emailMock.Object);
         var result = await service.InitiateReturnAsync(
             new CreateReturnDto { ToyId = Guid.NewGuid() }, user.Id);
 
@@ -90,7 +91,7 @@ public class ReturnServiceTests
         context.Toys.Add(toy);
         await context.SaveChangesAsync();
 
-        var service = new ReturnService(context, _loggerMock.Object);
+        var service = new ReturnService(context, _loggerMock.Object, _emailMock.Object);
         var result = await service.InitiateReturnAsync(
             new CreateReturnDto { ToyId = toy.Id }, user.Id);
 
@@ -111,7 +112,7 @@ public class ReturnServiceTests
         context.Toys.Add(toy);
         await context.SaveChangesAsync();
 
-        var service = new ReturnService(context, _loggerMock.Object);
+        var service = new ReturnService(context, _loggerMock.Object, _emailMock.Object);
         var result = await service.InitiateReturnAsync(
             new CreateReturnDto { ToyId = toy.Id }, user.Id);
 
@@ -132,7 +133,7 @@ public class ReturnServiceTests
         context.Toys.Add(toy);
         await context.SaveChangesAsync();
 
-        var service = new ReturnService(context, _loggerMock.Object);
+        var service = new ReturnService(context, _loggerMock.Object, _emailMock.Object);
 
         // First return succeeds (toy goes to PendingReturn)
         var result1 = await service.InitiateReturnAsync(
@@ -161,7 +162,7 @@ public class ReturnServiceTests
         context.Toys.Add(toy);
         await context.SaveChangesAsync();
 
-        var service = new ReturnService(context, _loggerMock.Object);
+        var service = new ReturnService(context, _loggerMock.Object, _emailMock.Object);
 
         // Initiate return
         var initiateResult = await service.InitiateReturnAsync(
@@ -203,7 +204,7 @@ public class ReturnServiceTests
         context.Toys.Add(toy);
         await context.SaveChangesAsync();
 
-        var service = new ReturnService(context, _loggerMock.Object);
+        var service = new ReturnService(context, _loggerMock.Object, _emailMock.Object);
 
         var initiateResult = await service.InitiateReturnAsync(
             new CreateReturnDto { ToyId = toy.Id }, user.Id);
@@ -244,7 +245,7 @@ public class ReturnServiceTests
         context.Toys.Add(toy);
         await context.SaveChangesAsync();
 
-        var service = new ReturnService(context, _loggerMock.Object);
+        var service = new ReturnService(context, _loggerMock.Object, _emailMock.Object);
 
         var initiateResult = await service.InitiateReturnAsync(
             new CreateReturnDto { ToyId = toy.Id }, user.Id);
@@ -266,7 +267,7 @@ public class ReturnServiceTests
     {
         var dbName = nameof(ApproveReturn_NotFound_Fails);
         var context = TestDbHelper.CreateContext(dbName);
-        var service = new ReturnService(context, _loggerMock.Object);
+        var service = new ReturnService(context, _loggerMock.Object, _emailMock.Object);
 
         var result = await service.ApproveReturnAsync(Guid.NewGuid(),
             new ApproveReturnDto { ConditionOnReturn = ToyCondition.Good }, Guid.NewGuid());
@@ -290,7 +291,7 @@ public class ReturnServiceTests
         context.Toys.Add(toy);
         await context.SaveChangesAsync();
 
-        var service = new ReturnService(context, _loggerMock.Object);
+        var service = new ReturnService(context, _loggerMock.Object, _emailMock.Object);
 
         var initiateResult = await service.InitiateReturnAsync(
             new CreateReturnDto { ToyId = toy.Id }, user.Id);
@@ -328,7 +329,7 @@ public class ReturnServiceTests
         context.Toys.Add(toy);
         await context.SaveChangesAsync();
 
-        var service = new ReturnService(context, _loggerMock.Object);
+        var service = new ReturnService(context, _loggerMock.Object, _emailMock.Object);
 
         var initiateResult = await service.InitiateReturnAsync(
             new CreateReturnDto { ToyId = toy.Id }, user.Id);
@@ -349,7 +350,7 @@ public class ReturnServiceTests
     {
         var dbName = nameof(RejectReturn_NotFound_Fails);
         var context = TestDbHelper.CreateContext(dbName);
-        var service = new ReturnService(context, _loggerMock.Object);
+        var service = new ReturnService(context, _loggerMock.Object, _emailMock.Object);
 
         var result = await service.RejectReturnAsync(Guid.NewGuid(), "notes", Guid.NewGuid());
 
@@ -370,7 +371,7 @@ public class ReturnServiceTests
         context.Users.AddRange(admin, user);
         await context.SaveChangesAsync();
 
-        var service = new ReturnService(context, _loggerMock.Object);
+        var service = new ReturnService(context, _loggerMock.Object, _emailMock.Object);
 
         // Create 3 returns
         for (int i = 0; i < 3; i++)
@@ -405,7 +406,7 @@ public class ReturnServiceTests
         context.Toys.AddRange(toy1, toy2);
         await context.SaveChangesAsync();
 
-        var service = new ReturnService(context, _loggerMock.Object);
+        var service = new ReturnService(context, _loggerMock.Object, _emailMock.Object);
 
         await service.InitiateReturnAsync(new CreateReturnDto { ToyId = toy1.Id }, user1.Id);
         await service.InitiateReturnAsync(new CreateReturnDto { ToyId = toy2.Id }, user2.Id);
@@ -431,7 +432,7 @@ public class ReturnServiceTests
         context.Toys.Add(toy);
         await context.SaveChangesAsync();
 
-        var service = new ReturnService(context, _loggerMock.Object);
+        var service = new ReturnService(context, _loggerMock.Object, _emailMock.Object);
 
         // Step 1: User initiates return
         var initResult = await service.InitiateReturnAsync(

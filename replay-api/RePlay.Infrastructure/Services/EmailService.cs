@@ -1,5 +1,8 @@
+using MailKit.Net.Smtp;
+using MailKit.Security;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using MimeKit;
 using RePlay.Application.Interfaces;
 
 namespace RePlay.Infrastructure.Services;
@@ -108,32 +111,59 @@ public class EmailService : IEmailService
 
     private async Task SendEmailAsync(string toEmail, string subject, string htmlBody)
     {
-        // In development, just log the email
         _logger.LogInformation(
-            "Email would be sent to {ToEmail} with subject '{Subject}'",
+            "Sending email to {ToEmail} with subject '{Subject}'",
             toEmail,
             subject
         );
 
-        // TODO: Implement actual email sending with MailKit
-        // For now, we'll simulate the email being sent
-        await Task.CompletedTask;
+        // Wrap content in a branded HTML template
+        var fullHtml = $@"
+<!DOCTYPE html>
+<html>
+<head><meta charset='utf-8' /></head>
+<body style='margin:0; padding:0; background-color:#f3f4f6; font-family:Arial,sans-serif;'>
+  <div style='max-width:600px; margin:0 auto; padding:20px;'>
+    <div style='background-color:#4F46E5; padding:20px; border-radius:8px 8px 0 0; text-align:center;'>
+      <h1 style='color:#ffffff; margin:0; font-size:24px;'>RePlay</h1>
+    </div>
+    <div style='background-color:#ffffff; padding:30px; border-radius:0 0 8px 8px;'>
+      {htmlBody}
+    </div>
+    <div style='text-align:center; padding:20px; color:#9ca3af; font-size:12px;'>
+      <p>&copy; {DateTime.UtcNow.Year} RePlay. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>";
 
-        /*
-        // Production implementation with MailKit:
-        using var message = new MimeMessage();
-        message.From.Add(new MailboxAddress(_settings.FromName, _settings.FromEmail));
-        message.To.Add(MailboxAddress.Parse(toEmail));
-        message.Subject = subject;
+        if (string.IsNullOrEmpty(_settings.SmtpHost))
+        {
+            _logger.LogWarning("SMTP not configured. Email to {ToEmail} was logged but not sent.", toEmail);
+            return;
+        }
 
-        var builder = new BodyBuilder { HtmlBody = htmlBody };
-        message.Body = builder.ToMessageBody();
+        try
+        {
+            using var message = new MimeMessage();
+            message.From.Add(new MailboxAddress(_settings.FromName, _settings.FromEmail));
+            message.To.Add(MailboxAddress.Parse(toEmail));
+            message.Subject = subject;
 
-        using var client = new SmtpClient();
-        await client.ConnectAsync(_settings.SmtpHost, _settings.SmtpPort, SecureSocketOptions.StartTls);
-        await client.AuthenticateAsync(_settings.SmtpUsername, _settings.SmtpPassword);
-        await client.SendAsync(message);
-        await client.DisconnectAsync(true);
-        */
+            var builder = new BodyBuilder { HtmlBody = fullHtml };
+            message.Body = builder.ToMessageBody();
+
+            using var client = new SmtpClient();
+            await client.ConnectAsync(_settings.SmtpHost, _settings.SmtpPort, SecureSocketOptions.StartTls);
+            await client.AuthenticateAsync(_settings.SmtpUsername, _settings.SmtpPassword);
+            await client.SendAsync(message);
+            await client.DisconnectAsync(true);
+
+            _logger.LogInformation("Email sent successfully to {ToEmail}.", toEmail);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to send email to {ToEmail} with subject '{Subject}'.", toEmail, subject);
+        }
     }
 }
